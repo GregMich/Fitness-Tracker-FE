@@ -1,3 +1,73 @@
-<div>
-  This is the app component
+---
+layout: examples
+title: Dashboard Template
+extra_css: "dashboard.css"
+extra_js:
+  - "https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"
+  - "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"
+  - "dashboard.js"
+---
+
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Fitness Tracker</a>
+  
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap dropdown">
+      <a class="nav-link" href="#">
+        User Profile Name
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/"
+              [class.active]="activeNavbarRoute('/')">
+              <i class="fas fa-home"></i> Dashboard <span class="sr-only"></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              routerLink="lifting"
+              [class.active]="activeNavbarRoute('/lifting')">
+              <i class="fas fa-dumbbell"></i> Lifting
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="cardio"
+            [class.active]="activeNavbarRoute('/cardio')">
+              <i class="fas fa-running"></i>&nbsp; Cardio
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="stats"
+            [class.active]="activeNavbarRoute('/stats')">
+              <i class="fas fa-layer-group"></i>&nbsp; Stats
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="goals"
+            [class.active]="activeNavbarRoute('/goals')">
+              <i class="fas fa-bullseye"></i>&nbsp; Goals
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="progress"
+            [class.active]="activeNavbarRoute('/progress')">
+              <i class="far fa-chart-bar"></i>&nbsp; Progress
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
 </div>
