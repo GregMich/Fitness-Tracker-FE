@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Repo } from "../data/repo.model";
 import { StatsModel } from './stats.model';
+import { RestfulDataSource } from "../data/restful.datasource";
 
 @Component({
   selector: 'app-stats',
@@ -9,18 +9,15 @@ import { StatsModel } from './stats.model';
 })
 export class StatsComponent implements OnInit {
 
-  private bmi;
-
-  constructor(private repo: Repo) { 
+    private bmi;
+    public stats;
+  constructor(private dataSource: RestfulDataSource) { 
   }
 
   ngOnInit() {
     console.log("STATS COMPONENT INITIALIZED");
-  }
-
-  get stats(): StatsModel {
-    console.log(this.repo.getStats())
-    return this.repo.getStats();
+    this.dataSource.getStatsData()
+      .subscribe(data => this.stats = data);
   }
 
   private calculateBmi() {
