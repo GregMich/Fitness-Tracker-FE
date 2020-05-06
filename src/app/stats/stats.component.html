@@ -1,8 +1,10 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Stats</h1>
 </div>
+<div class="pt-2 spinner-border spinner-border text-primary" 
+    *ngIf="!statsLoaded"></div>
 
-<div class="pt-2">
+<div class="pt-2" *ngIf="statsLoaded">
     <h3 class="text-muted">
         General
     </h3>

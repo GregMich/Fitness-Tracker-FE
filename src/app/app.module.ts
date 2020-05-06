@@ -12,6 +12,9 @@ import { ProgressComponent } from './progress/progress.component';
 import { RestfulDataSource } from "./data/restful.datasource";
 import { HttpClientModule } from "@angular/common/http";
 
+// for Http Request loading bars
+import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,8 @@ import { HttpClientModule } from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LoadingBarHttpClientModule
   ],
   providers: [RestfulDataSource],
   bootstrap: [AppComponent]

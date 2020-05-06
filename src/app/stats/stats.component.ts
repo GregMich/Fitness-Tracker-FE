@@ -11,13 +11,17 @@ export class StatsComponent implements OnInit {
 
     private bmi;
     public stats;
+    public statsLoaded: boolean = false;
+
   constructor(private dataSource: RestfulDataSource) { 
   }
 
   ngOnInit() {
     console.log("STATS COMPONENT INITIALIZED");
     this.dataSource.getStatsData()
-      .subscribe(data => this.stats = data);
+      .subscribe(data => {
+        this.stats = data;
+        this.statsLoaded = true;});
   }
 
   private calculateBmi() {
