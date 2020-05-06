@@ -9,6 +9,9 @@ import { CardioComponent } from './cardio/cardio.component';
 import { StatsComponent } from './stats/stats.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ProgressComponent } from './progress/progress.component';
+import { Repo } from "./data/repo.model";
+import { RestfulDataSource } from "./data/restful.datasource";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -22,9 +25,10 @@ import { ProgressComponent } from './progress/progress.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [Repo, RestfulDataSource],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
