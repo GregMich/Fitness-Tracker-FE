@@ -5,7 +5,7 @@ module.exports = function () {
                 id: 1,
                 userId: 1,
                 weight: 225,
-                weightUnit: "lb",
+                weightUnit: "Lb",
                 heightFeet: 6,
                 heightInch: 1,
                 age: 24,

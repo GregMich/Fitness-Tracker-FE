@@ -2,8 +2,9 @@ import { Injectable, Inject, InjectionToken } from "@angular/core";
 // TODO configure target specific file replacements
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { StatsModel } from "../stats/stats.model";
+import { catchError } from "rxjs/operators";
 
 @Injectable()
 export class RestfulDataSource {
@@ -16,8 +17,11 @@ export class RestfulDataSource {
 
     getStatsData(): Observable<StatsModel> {
         // TODO remove this hardcoded part
-        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/stats/1`)
-        return this.http.get<StatsModel>(`${this.url}/stats/1`);
+        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/stats/2`)
+        return this.http.get<StatsModel>(`${this.url}/stats/2`);
+        // TODO make this more generalized
+            // .pipe(catchError((error: Response) => throwError(`Error: ${error.status} 
+            // ${error.statusText}`)));
     }
 
     updateStatsData(statsModel: StatsModel): Observable<StatsModel> {
@@ -26,4 +30,9 @@ export class RestfulDataSource {
             statsModel);
     }
 
+    createStatsData(statsModel: StatsModel): Observable<StatsModel> {
+        return this.http.post<StatsModel>(
+            `${this.url}/stats/`, 
+            statsModel);
+    }
 }
