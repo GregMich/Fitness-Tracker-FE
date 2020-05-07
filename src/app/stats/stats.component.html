@@ -7,7 +7,17 @@
 <div class="pt-2" *ngIf="statsLoaded">
     <h3 class="text-muted">
         General
+        <button class="float-right btn btn-link"
+            data-toggle="modal"
+            data-target="#changeStatsModal">
+            <i class="fa fa-edit"></i>
+        </button>
     </h3>
+    <!-- <button class="btn btn-link float-right pt-2"
+        data-toggle="modal"
+        data-target="#exampleModal">
+        <i class="fa fa-edit"></i>
+    </button> -->
     <table class="table table-hover">
         <thead>
             <tr>
@@ -41,4 +51,75 @@
             * BMI is only a rough estimate for the general population 
         </small>
     </p>
+
+    <div class="modal fade" id="changeStatsModal" tabindex="-1" 
+        aria-labelledby="changeStatsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="changeStatsModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- <form #statsForm="ngForm">
+                  <div class="form-group">
+                      <label>
+                          Test Form Field One
+                      </label>
+                      <input type="text" class="form-control" id="age"
+                        required [(ngModel)]="stats.age" name="age">
+                  </div>
+              </form> -->
+              <form [formGroup]="statsForm">
+                <div class="form-group">
+                    <label>
+                        Weight:
+                        <input class="form-control" 
+                            type="text" formControlName="weight">
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label>
+                        Unit:
+                        <select class="form-control" formControlName="age"
+                            formControlName="weightUnit">
+                            <option>Lb</option>
+                            <option>Kg</option>
+                        </select>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label>
+                        Height (Feet):
+                        <input class="form-control" 
+                            type="text" formControlName="heightFeet">
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label>
+                        Height (Inches):
+                        <input class="form-control" 
+                            type="text" formControlName="heightInch">
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label>
+                        Age:
+                        <input class="form-control" 
+                            type="text" formControlName="age">
+                    </label>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-link"
+                        type="submit" data-dismiss="modal" (click)="onGeneralStatsSubmit()">
+                          Save
+                      </button>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>

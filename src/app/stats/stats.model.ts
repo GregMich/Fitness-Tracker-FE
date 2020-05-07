@@ -1,7 +1,7 @@
 export class StatsModel {
 
     constructor(
-        public statsId: number,
+        public id: number,
         public userId: number,
         public weight: number,
         public weightUnit: number,

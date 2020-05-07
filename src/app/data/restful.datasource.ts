@@ -15,7 +15,15 @@ export class RestfulDataSource {
     }
 
     getStatsData(): Observable<StatsModel> {
-        console.log("SENDING REQUEST TO SERVER")
-        return this.http.get<StatsModel>(`${this.url}/stats`);
+        // TODO remove this hardcoded part
+        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/stats/1`)
+        return this.http.get<StatsModel>(`${this.url}/stats/1`);
     }
+
+    updateStatsData(statsModel: StatsModel): Observable<StatsModel> {
+        return this.http.put<StatsModel>(
+            `${this.url}/stats/${statsModel.id}`, 
+            statsModel);
+    }
+
 }
