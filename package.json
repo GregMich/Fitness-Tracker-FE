@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test-rest-server": "json-server -p 3500 restData.js --delay 300"
+    "mock-backend": "json-server -p 3500 restData.js --delay 300"
   },
   "private": true,
   "dependencies": {

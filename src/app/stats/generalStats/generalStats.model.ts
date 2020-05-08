@@ -1,4 +1,6 @@
-export class StatsModel {
+import { FormGroup, FormControl } from "@angular/forms";
+
+export class GeneralStatsModel {
 
     constructor(
         public id: number,
@@ -9,4 +11,5 @@ export class StatsModel {
         public heightInch: number,
         public age: number,
         public bodyfatPercentage: number) { }
+        
 }

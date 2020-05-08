@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './Dashboard/dashboard.component';
 import { LiftingComponent } from './lifting/lifting.component';
 import { CardioComponent } from './cardio/cardio.component';
-import { StatsComponent } from './stats/stats.component';
+import { GeneralStatsComponent } from './stats/generalStats/generalStats.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ProgressComponent } from './progress/progress.component';
 import { RestfulDataSource } from "./data/restful.datasource";
@@ -15,6 +15,7 @@ import { HttpClientModule } from "@angular/common/http";
 
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
+import { StatsModule } from './stats/stats.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,6 @@ import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
     DashboardComponent,
     LiftingComponent,
     CardioComponent,
-    StatsComponent,
     GoalsComponent,
     ProgressComponent
   ],
@@ -31,7 +31,8 @@ import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
     AppRoutingModule,
     HttpClientModule,
     LoadingBarHttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StatsModule
   ],
   providers: [RestfulDataSource],
   bootstrap: [AppComponent]

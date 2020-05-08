@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './Dashboard/dashboard.component';
 import { LiftingComponent } from "./lifting/lifting.component";
 import { CardioComponent } from "./cardio/cardio.component";
-import { StatsComponent } from "./stats/stats.component";
 import { GoalsComponent } from "./goals/goals.component";
 import { ProgressComponent } from "./progress/progress.component";
+import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
   {
