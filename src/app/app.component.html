@@ -19,38 +19,44 @@
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" routerLink="/"
-              [class.active]="activeNavbarRoute('/')">
+              [class.active]="activeNavbarRoute('/')"
+              [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-home"></i> Dashboard <span class="sr-only"></span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#"
               routerLink="lifting"
-              [class.active]="activeNavbarRoute('/lifting')">
+              [class.active]="activeNavbarRoute('/lifting')"
+              [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-dumbbell"></i> Lifting
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="cardio"
-            [class.active]="activeNavbarRoute('/cardio')">
+            [class.active]="activeNavbarRoute('/cardio')"
+            [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-running"></i>&nbsp; Cardio
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="stats"
-            [class.active]="activeNavbarRoute('/stats')">
+            [class.active]="activeNavbarRoute('/stats')"
+            [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-layer-group"></i>&nbsp; Stats
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="goals"
-            [class.active]="activeNavbarRoute('/goals')">
+            [class.active]="activeNavbarRoute('/goals')"
+            [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-bullseye"></i>&nbsp; Goals
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="progress"
-            [class.active]="activeNavbarRoute('/progress')">
+            [class.active]="activeNavbarRoute('/progress')"
+            [class.disabled]="activeNavbarRoute('/auth')">
               <i class="far fa-chart-bar"></i>&nbsp; Progress
             </a>
           </li>
@@ -59,6 +65,7 @@
     </nav>
     <div class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-5">
       <router-outlet></router-outlet>
+      <ngx-loading-bar></ngx-loading-bar>
     </div>
   </div>
   
