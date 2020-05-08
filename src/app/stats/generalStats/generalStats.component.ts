@@ -48,6 +48,7 @@ export class GeneralStatsComponent implements OnInit {
         });
   }
 
+  // TODO consider cleaning this up
   private calculateBmi() {
     this.bmi =
       (((+this.stats.weight) / ((+this.stats.heightInch) + (+this.stats.heightFeet * 12)) ** 2)

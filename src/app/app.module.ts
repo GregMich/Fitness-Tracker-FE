@@ -16,6 +16,9 @@ import { HttpClientModule } from "@angular/common/http";
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 import { StatsModule } from './stats/stats.module';
+import { AuthComponent } from "./Auth/auth.component";
+import { AuthGuard } from "./Auth/authGuard";
+import { AuthService } from './Auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { StatsModule } from './stats/stats.module';
     LiftingComponent,
     CardioComponent,
     GoalsComponent,
-    ProgressComponent
+    ProgressComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,7 @@ import { StatsModule } from './stats/stats.module';
     ReactiveFormsModule,
     StatsModule
   ],
-  providers: [RestfulDataSource],
+  providers: [RestfulDataSource, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
