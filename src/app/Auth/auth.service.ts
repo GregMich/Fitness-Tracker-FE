@@ -9,18 +9,24 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string) {
-        return this.http.post<User>('/api/login', {email, password})
-        .pipe(
-            tap( res => this.setSession(res)))
-        .pipe(
-            shareReplay())
+        // TODO make this part of a configuration
+        console.info('SENDING THE LOGIN REQUEST');
+        return this.http.post<User>(`https://localhost:5001/api/auth`, {email, password})
+            .subscribe(data => {
+                console.log(data);
+            })
+        // .pipe(
+        //     tap( res => this.setSession(res)))
+        // .pipe(
+        //     shareReplay())
     }
 
     private setSession(authResult) {
-        const expiresAt = moment().add(authResult.expiresIn,'second');
+        console.log(`AUTH RESULT: ${authResult}`)
+        // const expiresAt = moment().add(authResult.expiresIn,'second');
 
-        localStorage.setItem('id_token', authResult.idToken);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+        // localStorage.setItem('id_token', authResult.idToken);
+        // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
     }
 
     logout() {

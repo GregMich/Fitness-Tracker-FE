@@ -1,3 +1,38 @@
-<h2>
-    THIS IS THE AUTH COMPONENT
-</h2>
+<div class="pt-5 mt-5 col-9">
+    <h2 class="text-center">
+        Login
+    </h2>
+    <br>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+        <div class="form-group text-center">
+            <label>
+                Username
+                <input class="form-control"
+                    formControlName="username">
+            </label>
+        </div>
+        <div class="form-group text-center">
+            <label>
+                Password
+                <input class="form-control" type=password
+                    formControlName="password">
+            </label>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-outline-primary text-center" 
+            type="submit">
+                Login
+            </button>
+        </div>
+        <br>
+        <div class="text-center">
+            <a href="#">
+                Register
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="#">
+                Forgot Password?
+            </a>
+        </div>
+    </form>
+</div>
