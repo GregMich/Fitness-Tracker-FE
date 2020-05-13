@@ -1,4 +1,8 @@
 <div class="pt-5 mt-5 col-9">
+    <div class="alert alert-danger text-center"
+        *ngIf="authenticationFailed">
+        Username or password was incorrect
+    </div>
     <h2 class="text-center">
         Login
     </h2>
@@ -35,4 +39,8 @@
             </a>
         </div>
     </form>
+    <button class="btn btn-warning"
+        (click)="testIsLoggedIn()">
+        check is logged in
+    </button>
 </div>

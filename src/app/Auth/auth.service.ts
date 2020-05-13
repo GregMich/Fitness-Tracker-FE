@@ -2,40 +2,48 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { shareReplay, tap } from "rxjs/operators";
 import * as moment from "moment";
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
 
+    private tokenKey = 'id_token'
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string) {
         // TODO make this part of a configuration
         console.info('SENDING THE LOGIN REQUEST');
-        return this.http.post<User>(`https://localhost:5001/api/auth`, {email, password})
-            .subscribe(data => {
-                console.log(data);
-            })
-        // .pipe(
-        //     tap( res => this.setSession(res)))
-        // .pipe(
-        //     shareReplay())
+        return this.http.post<any>(`https://localhost:5001/api/auth`, {email, password})
+        .pipe(
+            tap( res => this.setSession(res)))
+        .pipe(
+            shareReplay())
     }
 
     private setSession(authResult) {
-        console.log(`AUTH RESULT: ${authResult}`)
-        // const expiresAt = moment().add(authResult.expiresIn,'second');
+        console.log(`AUTH RESULT:`);
+        console.log(authResult);
+        var decodedJWT = jwt_decode(authResult.token);
+        console.log('DECODED JWT:')
+        console.log(decodedJWT);
 
-        // localStorage.setItem('id_token', authResult.idToken);
-        // localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+        localStorage.setItem(this.tokenKey, authResult.token);
+        var test = localStorage.getItem('test_empty');
+        console.warn(test);
     }
 
     logout() {
         localStorage.removeItem("id_token");
-        localStorage.removeItem("expires_at");
     }
 
     public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+        console.log('Checking to see if logged in');
+        if (localStorage.getItem(this.tokenKey) != null)
+        {
+            const now = Date.now().valueOf() / 1000;
+            return (now < this.getExpiration())
+        }
+        return false;
     }
 
     isLoggedOut() {
@@ -43,17 +51,9 @@ export class AuthService {
     }
 
     getExpiration() {
-        const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration);
-        return moment(expiresAt);
+        const token = localStorage.getItem(this.tokenKey);
+        const decodedToken = jwt_decode(token);
+        const exp = decodedToken.exp;
+        return exp;
     }
-
-    isAuthenticated() {
-        console.warn('AUTH SERVICE CALLED')
-        return false;
-    }
-}
-
-export class User {
-
 }

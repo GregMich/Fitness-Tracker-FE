@@ -13,8 +13,8 @@ export class AuthGuard {
         state: RouterStateSnapshot): boolean {
 
             console.warn('CAN ACTIVATE CALLED')
-            console.warn(this.auth.isAuthenticated())
-        if (!this.auth.isAuthenticated()) {
+            console.warn(this.auth.isLoggedIn())
+        if (!this.auth.isLoggedIn()) {
             this.router.navigateByUrl("/auth");
             return false;
         } 
