@@ -21,23 +21,28 @@ const routes: Routes = [
   },
   {
     path: "cardio",
-    component: CardioComponent
+    component: CardioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "stats",
-    component: StatsComponent
+    component: StatsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "goals",
-    component: GoalsComponent
+    component: GoalsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "progress",
-    component: ProgressComponent
+    component: ProgressComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "**",
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

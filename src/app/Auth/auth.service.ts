@@ -56,4 +56,10 @@ export class AuthService {
         const exp = decodedToken.exp;
         return exp;
     }
+
+    getUserEmail() {
+        const token = localStorage.getItem(this.tokenKey);
+        const decodedToken = jwt_decode(token);
+        return decodedToken.Email;
+    }
 }
