@@ -17,8 +17,8 @@ export class RestfulDataSource {
 
     getStatsData(): Observable<GeneralStatsModel> {
         // TODO remove this hardcoded part
-        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/stats/2`)
-        return this.http.get<GeneralStatsModel>(`${this.url}/stats/2`);
+        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/Stats/1`)
+        return this.http.get<GeneralStatsModel>(`${this.url}/Stats/1`);
         // TODO make this more generalized
             // .pipe(catchError((error: Response) => throwError(`Error: ${error.status} 
             // ${error.statusText}`)));

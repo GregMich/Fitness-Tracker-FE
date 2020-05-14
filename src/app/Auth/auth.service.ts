@@ -62,4 +62,8 @@ export class AuthService {
         const decodedToken = jwt_decode(token);
         return decodedToken.Email;
     }
+
+    getToken() {
+        return localStorage.getItem(this.tokenKey);
+    }
 }

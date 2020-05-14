@@ -12,8 +12,6 @@ export class AuthGuard {
     canActivate(route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
 
-            console.warn('CAN ACTIVATE CALLED')
-            console.warn(this.auth.isLoggedIn())
         if (!this.auth.isLoggedIn()) {
             this.router.navigateByUrl("/auth");
             return false;
