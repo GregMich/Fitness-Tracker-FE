@@ -115,15 +115,16 @@ export class GeneralStatsComponent implements OnInit {
       // need to perform a PUT to update the model
       console.debug("Updating stats model with PUT request");
       let updatedStatsModel = new GeneralStatsModel(
-          this.stats.id,
+          this.stats.statsId,
           this.stats.userId,
           this.statsForm.value['weight'] as number,
           this.statsForm.value['weightUnit'],
           this.statsForm.value['heightFeet'] as number,
           this.statsForm.value['heightInch'] as number,
-          this.statsForm.value['age'] as number,
+          parseInt(this.statsForm.value['age']),
           this.statsForm.value['bodyfatPercentage'] as number)
-
+        console.log('UPDATED STATS MODEL');
+        console.log(updatedStatsModel);
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
@@ -131,6 +132,7 @@ export class GeneralStatsComponent implements OnInit {
         .updateStatsData(updatedStatsModel)
         .subscribe(data => {
           console.debug("updateStatsData call back");
+          console.log(data);
           this.stats = data;
           this.statsLoaded = true;
           this.existingStatsFound = true;})

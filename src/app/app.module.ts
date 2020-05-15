@@ -11,7 +11,7 @@ import { GeneralStatsComponent } from './stats/generalStats/generalStats.compone
 import { GoalsComponent } from './goals/goals.component';
 import { ProgressComponent } from './progress/progress.component';
 import { RestfulDataSource } from "./data/restful.datasource";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
@@ -19,6 +19,7 @@ import { StatsModule } from './stats/stats.module';
 import { AuthComponent } from "./Auth/auth.component";
 import { AuthGuard } from "./Auth/authGuard";
 import { AuthService } from './Auth/auth.service';
+import { AuthTokenInterceptor } from "./Auth/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,15 @@ import { AuthService } from './Auth/auth.service';
     ReactiveFormsModule,
     StatsModule
   ],
-  providers: [RestfulDataSource, AuthService, AuthGuard],
+  providers: [
+    RestfulDataSource, 
+    AuthService, 
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

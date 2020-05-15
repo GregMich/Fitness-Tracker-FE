@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 export class GeneralStatsModel {
 
     constructor(
-        public id: number,
+        public statsId: number,
         public userId: number,
         public weight: number,
         public weightUnit: number,

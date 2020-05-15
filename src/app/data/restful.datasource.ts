@@ -26,7 +26,7 @@ export class RestfulDataSource {
 
     updateStatsData(statsModel: GeneralStatsModel): Observable<GeneralStatsModel> {
         return this.http.put<GeneralStatsModel>(
-            `${this.url}/stats/${statsModel.id}`, 
+            `${this.url}/Stats/${statsModel.statsId}`, 
             statsModel);
     }
 
