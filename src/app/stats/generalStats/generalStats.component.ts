@@ -117,12 +117,12 @@ export class GeneralStatsComponent implements OnInit {
       let updatedStatsModel = new GeneralStatsModel(
           this.stats.statsId,
           this.stats.userId,
-          this.statsForm.value['weight'] as number,
+          +this.statsForm.value['weight'] as number,
           this.statsForm.value['weightUnit'],
-          this.statsForm.value['heightFeet'] as number,
-          this.statsForm.value['heightInch'] as number,
+          +this.statsForm.value['heightFeet'] as number,
+          +this.statsForm.value['heightInch'],
           parseInt(this.statsForm.value['age']),
-          this.statsForm.value['bodyfatPercentage'] as number)
+          +this.statsForm.value['bodyfatPercentage'])
         console.log('UPDATED STATS MODEL');
         console.log(updatedStatsModel);
       this.statsLoaded = false;
@@ -140,15 +140,16 @@ export class GeneralStatsComponent implements OnInit {
     else if (this.noStatsFound) {
       console.log('Creating new General Stats model with POST request');
       let newStatsModel = new GeneralStatsModel(
-        null,
-        10,
-        this.statsForm.value['weight'] as number,
+        0,
+        1,
+        +this.statsForm.value['weight'],
         this.statsForm.value['weightUnit'],
-        this.statsForm.value['heightFeet'] as number,
-        this.statsForm.value['heightInch'] as number,
-        this.statsForm.value['age'] as number,
-        this.statsForm.value['bodyfatPercentage'] as number)
-
+        +this.statsForm.value['heightFeet'],
+        +this.statsForm.value['heightInch'],
+        +this.statsForm.value['age'],
+        +this.statsForm.value['bodyfatPercentage'])
+        console.log('new stats model')
+        console.log(newStatsModel);
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
