@@ -3,6 +3,7 @@ import { GeneralStatsModel } from './generalStats.model';
 import { RestfulDataSource } from "../../data/restful.datasource";
 import { FormGroup, FormControl } from "@angular/forms";
 import { catchError } from "rxjs/operators";
+import { AuthService } from "../../Auth/auth.service";
 
 @Component({
   selector: 'general-stats',
@@ -23,7 +24,8 @@ export class GeneralStatsComponent implements OnInit {
 
   statsForm: FormGroup;
 
-  constructor(private dataSource: RestfulDataSource) {
+  constructor(private dataSource: RestfulDataSource,
+    private auth: AuthService) {
   }
 
   ngOnInit() {
@@ -141,7 +143,7 @@ export class GeneralStatsComponent implements OnInit {
       console.log('Creating new General Stats model with POST request');
       let newStatsModel = new GeneralStatsModel(
         0,
-        1,
+        parseInt(this.auth.getUserId()),
         +this.statsForm.value['weight'],
         this.statsForm.value['weightUnit'],
         +this.statsForm.value['heightFeet'],
