@@ -21,6 +21,7 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor{
                 if (error.status == 401) {
                     if (this.auth.isLoggedOut) {
                         this.router.navigateByUrl("/auth");
+                        return next.handle(request);
                     }
                 } else {
                     return throwError(error);

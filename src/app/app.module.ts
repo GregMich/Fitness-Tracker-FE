@@ -49,11 +49,11 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
       useClass: AuthTokenInterceptor,
       multi: true
     },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: UnauthorizedErrorInterceptor,
-    //   multi: true
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
