@@ -5,34 +5,45 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { GeneralStatsModel } from "../stats/generalStats/generalStats.model";
 import { catchError } from "rxjs/operators";
+import { AuthService } from "../Auth/auth.service"; 
 
 @Injectable()
 export class RestfulDataSource {
 
     private url: string;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+        private auth: AuthService) {
         this.url = environment.backendApiUrl;
     }
 
     getStatsData(): Observable<GeneralStatsModel> {
-        // TODO remove this hardcoded part
-        console.debug(`getStatsData invoked, sending request to backend: ${this.url}/Stats/1`)
-        return this.http.get<GeneralStatsModel>(`${this.url}/Stats/1`);
-        // TODO make this more generalized
-            // .pipe(catchError((error: Response) => throwError(`Error: ${error.status} 
-            // ${error.statusText}`)));
+        
+        const url = `${this.url}/User/${this.auth.getUserId()}/Stats/`
+        console.log('Sending GET request to');
+        console.log(url)
+        return this.http.get<GeneralStatsModel>(url);
     }
 
     updateStatsData(statsModel: GeneralStatsModel): Observable<GeneralStatsModel> {
+        const url = `${this.url}/User/${this.auth.getUserId()}/Stats/${statsModel.statsId}`
+        console.log('Sending PUT request to');
+        console.log(url);
+        console.log('With updated model:');
+        console.log(statsModel);
         return this.http.put<GeneralStatsModel>(
-            `${this.url}/Stats/${statsModel.statsId}`, 
+            url, 
             statsModel);
     }
 
     createStatsData(statsModel: GeneralStatsModel): Observable<GeneralStatsModel> {
+        const url = `${this.url}/User/${this.auth.getUserId()}/Stats/`
+        console.log('Sending PUT request to');
+        console.log(url);
+        console.log('With updated model:');
+        console.log(statsModel);
         return this.http.post<GeneralStatsModel>(
-            `${this.url}/stats/`, 
+            url, 
             statsModel);
     }
 }

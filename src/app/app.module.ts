@@ -20,6 +20,7 @@ import { AuthComponent } from "./Auth/auth.component";
 import { AuthGuard } from "./Auth/authGuard";
 import { AuthService } from './Auth/auth.service';
 import { AuthTokenInterceptor } from "./Auth/token.interceptor";
+import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,13 @@ import { AuthTokenInterceptor } from "./Auth/token.interceptor";
       provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
       multi: true
-    }],
+    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: UnauthorizedErrorInterceptor,
+    //   multi: true
+    // }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
