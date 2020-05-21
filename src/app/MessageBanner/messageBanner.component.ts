@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { BannerMessage } from "./messageBanner.model";
+import { BannerMessage, BannerMessageType } from "./messageBanner.model";
 import { MessageBannerService } from "./messageBannerService";
 
 @Component({
@@ -18,5 +18,12 @@ export class MessageBannerComponent {
     clearMessage() {
         console.warn('clear message event listener called')
         this.lastMessage = null;
+    }
+
+    getMessageBannerClassMap() {
+        return {
+            "alert-danger": this.lastMessage.messageType == BannerMessageType.error,
+            "alert-info": this.lastMessage.messageType == BannerMessageType.info
+        }
     }
 }

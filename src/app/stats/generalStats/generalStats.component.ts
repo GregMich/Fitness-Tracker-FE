@@ -23,6 +23,8 @@ export class GeneralStatsComponent implements OnInit {
   public noStatsFound: boolean = false;
   // a 200 returned with the existing stats data
   public existingStatsFound: boolean = false;
+  // cancel loading of component due to server communication error
+  public serverError: boolean = false;
 
   statsForm: FormGroup;
 
@@ -45,10 +47,17 @@ export class GeneralStatsComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 404) {
-            console.log('There was a 404 error');
             this.noStatsFound = true;
             this.statsLoaded = true;
             this.createStatsFormGroup();
+          }
+          else {
+            console.error('There was an error communicating with the backend server');
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error', BannerMessageType.error)
+            )
+            this.statsLoaded = true;
+            this.serverError = true;
           }
         });
   }
@@ -140,7 +149,19 @@ export class GeneralStatsComponent implements OnInit {
           console.log(data);
           this.stats = data;
           this.statsLoaded = true;
-          this.existingStatsFound = true;})
+          this.existingStatsFound = true;
+          this.messageBannerService.reportMessage(
+            new BannerMessage('Your stats were updated', BannerMessageType.info)
+          )},
+          error => {
+            console.error(error);
+            this.statsLoaded = true;
+            this.existingStatsFound = true;
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error updating your stats, please try again',
+              BannerMessageType.error)
+            )
+          })
     }
     else if (this.noStatsFound) {
       console.log('Creating new General Stats model with POST request');
@@ -163,7 +184,19 @@ export class GeneralStatsComponent implements OnInit {
         .subscribe(data => {
           this.stats = data;
           this.statsLoaded = true;
-          this.existingStatsFound = true;})
+          this.existingStatsFound = true;
+          this.messageBannerService.reportMessage(
+            new BannerMessage('Your stats were created', BannerMessageType.info)
+          )},
+          error => {
+            console.error(error);
+            this.noStatsFound = true;
+            this.statsLoaded = true;
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error saving your stats, please try again',
+              BannerMessageType.error)
+            )
+          })
     }
   }
 

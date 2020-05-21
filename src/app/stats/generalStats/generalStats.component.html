@@ -4,7 +4,7 @@
 <div class="pt-2 spinner-border spinner-border text-primary" 
     *ngIf="!statsLoaded"></div>
 
-<div class="pt-2" *ngIf="existingStatsFound">
+<div class="pt-2" *ngIf="existingStatsFound && !serverError">
     <h3 class="text-muted">
         General
         <button class="float-right btn btn-link"
@@ -52,7 +52,7 @@
         </small>
     </p>
 </div>
-<div *ngIf="noStatsFound">
+<div *ngIf="noStatsFound && !serverError">
     <h3 class="text-muted">
         Enter your general stats
         <button class="float-right btn btn-link"
@@ -62,14 +62,9 @@
         </button>
     </h3>
 </div>
-<div>
-    <button (click)="messageClick()">
-        Click Me
-    </button>
-</div>
 <div class="modal fade" id="changeStatsModal" tabindex="-1" 
 aria-labelledby="changeStatsModalLabel" aria-hidden="true"
-*ngIf="statsLoaded || noStatsFound">
+*ngIf="(statsLoaded || noStatsFound) && !serverError">
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">

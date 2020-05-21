@@ -1,6 +1,7 @@
 <div class="pt-3 pb-2 mb-3">
-    <div class="alert alert-danger text-center 
-        alert-dismissible fade show" *ngIf="lastMessage">
+    <div class="alert text-center 
+        alert-dismissible fade show" *ngIf="lastMessage"
+        [ngClass]="getMessageBannerClassMap()">
         <strong>
             {{ lastMessage.text }}
         </strong>
