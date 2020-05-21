@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './Dashboard/dashboard.component';
 import { LiftingComponent } from './lifting/lifting.component';
 import { CardioComponent } from './cardio/cardio.component';
-import { GeneralStatsComponent } from './stats/generalStats/generalStats.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ProgressComponent } from './progress/progress.component';
 import { RestfulDataSource } from "./data/restful.datasource";
+import { MessageBannerComponent} from "./MessageBanner/messageBanner.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { MessageBannerModule } from "./MessageBanner/messageBanner.module";
 
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
@@ -38,7 +39,8 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
     HttpClientModule,
     LoadingBarHttpClientModule,
     ReactiveFormsModule,
-    StatsModule
+    StatsModule,
+    MessageBannerModule
   ],
   providers: [
     RestfulDataSource, 

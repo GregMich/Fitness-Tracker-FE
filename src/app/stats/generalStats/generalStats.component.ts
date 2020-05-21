@@ -4,6 +4,8 @@ import { RestfulDataSource } from "../../data/restful.datasource";
 import { FormGroup, FormControl } from "@angular/forms";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../../Auth/auth.service";
+import { MessageBannerService } from 'src/app/MessageBanner/messageBannerService';
+import { BannerMessage, BannerMessageType } from "../../MessageBanner/messageBanner.model";
 
 @Component({
   selector: 'general-stats',
@@ -25,7 +27,8 @@ export class GeneralStatsComponent implements OnInit {
   statsForm: FormGroup;
 
   constructor(private dataSource: RestfulDataSource,
-    private auth: AuthService) {
+    private auth: AuthService,
+    private messageBannerService: MessageBannerService) {
   }
 
   ngOnInit() {
@@ -162,5 +165,9 @@ export class GeneralStatsComponent implements OnInit {
           this.statsLoaded = true;
           this.existingStatsFound = true;})
     }
+  }
+
+  messageClick() {
+    this.messageBannerService.reportMessage(new BannerMessage('' + Date.now(), BannerMessageType.info));
   }
 }

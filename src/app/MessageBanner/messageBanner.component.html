@@ -1,0 +1,17 @@
+<div class="pt-3 pb-2 mb-3">
+    <div class="alert alert-danger text-center 
+        alert-dismissible fade show" *ngIf="lastMessage">
+        <strong>
+            {{ lastMessage.text }}
+        </strong>
+        <button type="button" class="close" aria-label="Close"
+        (click)="clearMessage()">
+            <span>&times;</span>
+          </button>
+    </div>
+</div>
+<!-- <div class="alert alert-danger pt-3 pb-2 mb-3 mt-2 text-center" *ngIf="lastMessage">
+    <strong>
+        {{ lastMessage.text }}
+    </strong>
+</div> -->
