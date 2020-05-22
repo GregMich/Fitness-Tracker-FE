@@ -46,7 +46,7 @@ export class AuthComponent implements OnInit {
   }
 
   testIsLoggedIn() {
-    console.log(this.authService.isLoggedIn());
+    console.log(this.authService.getToken());
   }
 
 }

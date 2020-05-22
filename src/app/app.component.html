@@ -1,20 +1,36 @@
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<!-- <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0">
       <strong>Fitness Tracker</strong>
   </a>
   
   <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap dropdown">
-      <a class="nav-link" href="#">
+    <li class="nav-item text-nowrap">
+      <h6 class="text-white mt-1">
         {{ displayName }}
-      </a>
+      </h6>
     </li>
   </ul>
-</nav>
+</nav> -->
+<ul class="nav fixed-top flex-md-nowrap p-0 shadow bg-dark">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+    <strong class="text-white">Fitness Tracker</strong>
+  </a>
+  <li class="nav-item ml-auto mt-1 dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" 
+    href="#" aria-haspopup="true" aria-expanded="false">
+      {{ displayName }}
+    </a>
+    <div class="dropdown-menu">
+      <button class="dropdown-item btn btn-link" (click)="logoutUser()">
+        Logout
+      </button>
+    </div>
+  </li>
+</ul>
 
 <div class="container-fluid">
   <div class="row">
-    <nav *ngIf="!activeNavbarRoute('/auth')" class="col-md-2 d-none d-md-block bg-light sidebar">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">

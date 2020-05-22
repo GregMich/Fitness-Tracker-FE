@@ -6,6 +6,7 @@ import { Observable, throwError } from "rxjs";
 import { GeneralStatsModel } from "../stats/generalStats/generalStats.model";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../Auth/auth.service"; 
+import { retry } from "rxjs/operators"
 
 @Injectable()
 export class RestfulDataSource {
@@ -22,7 +23,10 @@ export class RestfulDataSource {
         const url = `${this.url}/User/${this.auth.getUserId()}/Stats/`
         console.log('Sending GET request to');
         console.log(url)
-        return this.http.get<GeneralStatsModel>(url);
+        return this.http.get<GeneralStatsModel>(url)
+        .pipe(
+            retry(1)
+        );
     }
 
     updateStatsData(statsModel: GeneralStatsModel): Observable<GeneralStatsModel> {

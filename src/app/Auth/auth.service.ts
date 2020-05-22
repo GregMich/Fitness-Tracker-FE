@@ -21,15 +21,9 @@ export class AuthService {
     }
 
     private setSession(authResult) {
-        console.log(`AUTH RESULT:`);
-        console.log(authResult);
         var decodedJWT = jwt_decode(authResult.token);
-        console.log('DECODED JWT:')
-        console.log(decodedJWT);
 
         localStorage.setItem(this.tokenKey, authResult.token);
-        var test = localStorage.getItem('test_empty');
-        console.warn(test);
     }
 
     logout() {
@@ -64,7 +58,9 @@ export class AuthService {
     }
 
     getToken() {
-        return localStorage.getItem(this.tokenKey);
+        console.log('Retrieving Token');
+        var token = localStorage.getItem(this.tokenKey);
+        return token;
     }
 
     getUserId() {

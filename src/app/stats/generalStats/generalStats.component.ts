@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { GeneralStatsModel } from './generalStats.model';
 import { RestfulDataSource } from "../../data/restful.datasource";
 import { FormGroup, FormControl } from "@angular/forms";
-import { catchError } from "rxjs/operators";
 import { AuthService } from "../../Auth/auth.service";
 import { MessageBannerService } from 'src/app/MessageBanner/messageBannerService';
 import { BannerMessage, BannerMessageType } from "../../MessageBanner/messageBanner.model";
@@ -50,6 +49,8 @@ export class GeneralStatsComponent implements OnInit {
             this.noStatsFound = true;
             this.statsLoaded = true;
             this.createStatsFormGroup();
+          } else if (error.status == 401) { 
+            console.warn('user unauthorized')
           }
           else {
             console.error('There was an error communicating with the backend server');
@@ -62,17 +63,18 @@ export class GeneralStatsComponent implements OnInit {
         });
   }
 
-  // TODO consider cleaning this up
   private calculateBmi() {
+    var bodyWeight = this.stats.weight;
+    if (this.stats.weightUnit == 'Kg') {
+      bodyWeight = bodyWeight * 2.205
+    }
     this.bmi =
-      (((+this.stats.weight) / ((+this.stats.heightInch) + (+this.stats.heightFeet * 12)) ** 2)
+      (((+bodyWeight) / ((+this.stats.heightInch) + (+this.stats.heightFeet * 12)) ** 2)
         * 702);
     console.debug(`bmi calculated: ${this.bmi}`);
   }
 
-  // TODO move this mess into a method in the StatsModel class
   private createStatsFormGroup() {
-
     if (this.stats != undefined) {
       this.statsForm = new FormGroup({
         "weight": new FormControl(this.stats.weight),
@@ -126,8 +128,8 @@ export class GeneralStatsComponent implements OnInit {
     console.debug(this.statsForm.value);
 
     if (this.statsLoaded && !this.noStatsFound) {
-      // need to perform a PUT to update the model
       console.debug("Updating stats model with PUT request");
+
       let updatedStatsModel = new GeneralStatsModel(
           this.stats.statsId,
           this.stats.userId,
@@ -137,11 +139,14 @@ export class GeneralStatsComponent implements OnInit {
           +this.statsForm.value['heightInch'],
           parseInt(this.statsForm.value['age']),
           +this.statsForm.value['bodyfatPercentage'])
+
         console.log('UPDATED STATS MODEL');
         console.log(updatedStatsModel);
+
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
+
       this.dataSource
         .updateStatsData(updatedStatsModel)
         .subscribe(data => {
@@ -165,6 +170,7 @@ export class GeneralStatsComponent implements OnInit {
     }
     else if (this.noStatsFound) {
       console.log('Creating new General Stats model with POST request');
+
       let newStatsModel = new GeneralStatsModel(
         0,
         parseInt(this.auth.getUserId()),
@@ -174,11 +180,14 @@ export class GeneralStatsComponent implements OnInit {
         +this.statsForm.value['heightInch'],
         +this.statsForm.value['age'],
         +this.statsForm.value['bodyfatPercentage'])
+
         console.log('new stats model')
         console.log(newStatsModel);
+
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
+
       this.dataSource
         .createStatsData(newStatsModel)
         .subscribe(data => {
@@ -198,9 +207,5 @@ export class GeneralStatsComponent implements OnInit {
             )
           })
     }
-  }
-
-  messageClick() {
-    this.messageBannerService.reportMessage(new BannerMessage('' + Date.now(), BannerMessageType.info));
   }
 }

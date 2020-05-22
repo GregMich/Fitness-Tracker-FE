@@ -52,6 +52,14 @@
         </small>
     </p>
 </div>
+
+<!-- <div>
+    <button class="btn btn-outline-success"
+    (click)="messageClick()">
+        Click Me For Message Banner
+    </button>
+</div> -->
+
 <div *ngIf="noStatsFound && !serverError">
     <h3 class="text-muted">
         Enter your general stats
@@ -111,6 +119,13 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                 Age:
                 <input class="form-control" 
                     type="text" formControlName="age">
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+                Bodyfat Percentage:
+                <input class="form-control" 
+                    type="text" formControlName="bodyfatPercentage">
             </label>
           </div>
           <div class="modal-footer">

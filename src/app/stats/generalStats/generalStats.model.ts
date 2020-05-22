@@ -6,7 +6,7 @@ export class GeneralStatsModel {
         public statsId: number,
         public userId: number,
         public weight: number,
-        public weightUnit: number,
+        public weightUnit: string,
         public heightFeet: number,
         public heightInch: number,
         public age: number,

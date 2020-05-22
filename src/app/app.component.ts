@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { AuthService } from './Auth/auth.service';
+import { MessageBannerService } from './MessageBanner/messageBannerService';
+import { BannerMessage, BannerMessageType } from './MessageBanner/messageBanner.model';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,8 @@ export class AppComponent {
   private navbarRouteActive: string;
 
   constructor(private router: Router,
-      private auth: AuthService) { 
+      private auth: AuthService,
+      private messageBanner: MessageBannerService) { 
     this.router.events.subscribe(
       (event: any) => {
         if (event instanceof NavigationEnd) {
@@ -33,5 +36,12 @@ export class AppComponent {
     } else {
       return ''
     }
+  }
+
+  logoutUser() {
+    this.auth.logout();
+    this.router.navigateByUrl('/auth');
+    this.messageBanner.reportMessage(
+      new BannerMessage('You were logged out', BannerMessageType.info))
   }
 }

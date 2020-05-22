@@ -10,9 +10,9 @@ import { CardioComponent } from './cardio/cardio.component';
 import { GoalsComponent } from './goals/goals.component';
 import { ProgressComponent } from './progress/progress.component';
 import { RestfulDataSource } from "./data/restful.datasource";
-import { MessageBannerComponent} from "./MessageBanner/messageBanner.component";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MessageBannerModule } from "./MessageBanner/messageBanner.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
@@ -40,7 +40,8 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
     LoadingBarHttpClientModule,
     ReactiveFormsModule,
     StatsModule,
-    MessageBannerModule
+    MessageBannerModule,
+    BrowserAnimationsModule
   ],
   providers: [
     RestfulDataSource, 
