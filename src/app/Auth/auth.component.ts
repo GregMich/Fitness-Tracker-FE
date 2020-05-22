@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageBannerService } from '../MessageBanner/messageBannerService';
+import { BannerMessage, BannerMessageType } from '../MessageBanner/messageBanner.model';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +19,8 @@ export class AuthComponent implements OnInit {
     "password": new FormControl('')
   })
   constructor(private authService: AuthService,
-      private router: Router) { }
+      private router: Router,
+      private messageBanner: MessageBannerService) { }
 
   ngOnInit(): void {
     console.log(`is authenticated: ${this.authService.isLoggedIn()}`);
@@ -32,6 +35,9 @@ export class AuthComponent implements OnInit {
       this.loginForm.value["password"])
         .subscribe(res => {
           console.log(res);
+          this.messageBanner.reportMessage(
+            new BannerMessage('Welcome Back', BannerMessageType.info)
+          )
           this.router.navigateByUrl("/");
         },
         error => {
@@ -44,9 +50,4 @@ export class AuthComponent implements OnInit {
           }
         })
   }
-
-  testIsLoggedIn() {
-    console.log(this.authService.getToken());
-  }
-
 }

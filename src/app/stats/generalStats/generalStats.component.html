@@ -13,11 +13,6 @@
             <i class="fa fa-edit"></i>
         </button>
     </h3>
-    <!-- <button class="btn btn-link float-right pt-2"
-        data-toggle="modal"
-        data-target="#exampleModal">
-        <i class="fa fa-edit"></i>
-    </button> -->
     <table class="table table-hover">
         <thead>
             <tr>
@@ -52,14 +47,6 @@
         </small>
     </p>
 </div>
-
-<!-- <div>
-    <button class="btn btn-outline-success"
-    (click)="messageClick()">
-        Click Me For Message Banner
-    </button>
-</div> -->
-
 <div *ngIf="noStatsFound && !serverError">
     <h3 class="text-muted">
         Enter your general stats
@@ -88,6 +75,10 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                 Weight:
                 <input class="form-control" 
                     type="text" formControlName="weight">
+                    <span *ngIf="weight.invalid && (weight.dirty || weight.touched)"
+                        class="text-danger">
+                        <p *ngIf="weight.errors.required">Weight is required</p>
+                    </span>
             </label>
           </div>
           <div class="form-group">
@@ -95,9 +86,14 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                 Unit:
                 <select class="form-control" formControlName="age"
                     formControlName="weightUnit">
-                    <option>Lb</option>
+                    <option selected>Lb</option>
                     <option>Kg</option>
                 </select>
+                <span *ngIf="weightUnit.invalid 
+                && (weightUnit.dirty || weightUnit.touched)"
+                class="text-danger">
+                <p *ngIf="weightUnit.errors.required">A weight unit is required</p>
+            </span>
             </label>
           </div>
           <div class="form-group">
@@ -130,7 +126,8 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
           </div>
           <div class="modal-footer">
             <button class="btn btn-link"
-                type="submit" data-dismiss="modal" (click)="onGeneralStatsSubmit()">
+                type="submit" data-dismiss="modal" (click)="onGeneralStatsSubmit()"
+                [disabled]="!statsForm.valid">
                   Save
               </button>
           </div>

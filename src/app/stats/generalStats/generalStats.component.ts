@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralStatsModel } from './generalStats.model';
 import { RestfulDataSource } from "../../data/restful.datasource";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from "../../Auth/auth.service";
 import { MessageBannerService } from 'src/app/MessageBanner/messageBannerService';
 import { BannerMessage, BannerMessageType } from "../../MessageBanner/messageBanner.model";
@@ -75,27 +75,34 @@ export class GeneralStatsComponent implements OnInit {
   }
 
   private createStatsFormGroup() {
-    if (this.stats != undefined) {
-      this.statsForm = new FormGroup({
-        "weight": new FormControl(this.stats.weight),
-        "weightUnit": new FormControl(this.stats.weightUnit),
-        "heightFeet": new FormControl(this.stats.heightFeet),
-        "heightInch": new FormControl(this.stats.heightInch),
-        "age": new FormControl(this.stats.age),
-        "bodyfatPercentage": new FormControl(this.stats.bodyfatPercentage)
-      });
-    }
-    else {
-      this.statsForm = new FormGroup({
-        "weight": new FormControl(),
-        "weightUnit": new FormControl(),
-        "heightFeet": new FormControl(),
-        "heightInch": new FormControl(),
-        "age": new FormControl(),
-        "bodyfatPercentage": new FormControl()
-      });
-    }
+    this.statsForm = new FormGroup({
+        "weight": new FormControl(this.stats?.weight,
+          [
+            Validators.required
+          ]),
+        "weightUnit": new FormControl(this.stats?.weightUnit,
+          [
+            Validators.required
+          ]),
+        "heightFeet": new FormControl(this.stats?.heightFeet,
+          [
+            Validators.required
+          ]),
+        "heightInch": new FormControl(this.stats?.heightInch,
+          [
+            Validators.required
+          ]),
+        "age": new FormControl(this.stats?.age),
+        "bodyfatPercentage": new FormControl(this.stats?.bodyfatPercentage)
+    });
   }
+
+  get weight() { return this.statsForm.get("weight") }
+  get weightUnit() { return this.statsForm.get('weightUnit') }
+  get heightFeet() { return this.statsForm.get('heightFeet') }
+  get heightInch() { return this.statsForm.get('heightInch') }
+  get age() { return this.statsForm.get('age') }
+  get bodyfatPercentage() { return this.statsForm.get('bodyfatPercentage') }
 
   get bmiDisplayString() {
     this.calculateBmi();
@@ -121,9 +128,9 @@ export class GeneralStatsComponent implements OnInit {
     }
   }
 
-  // TODO move logic for saving stats to a repo or some other kind of service
   onGeneralStatsSubmit() {
 
+    if (this.statsForm.valid) {
     console.debug("OnGeneralStatsClick event listener");
     console.debug(this.statsForm.value);
 
@@ -156,8 +163,9 @@ export class GeneralStatsComponent implements OnInit {
           this.statsLoaded = true;
           this.existingStatsFound = true;
           this.messageBannerService.reportMessage(
-            new BannerMessage('Your stats were updated', BannerMessageType.info)
-          )},
+            new BannerMessage('Your stats were updated', BannerMessageType.info));
+          this.createStatsFormGroup();
+        },
           error => {
             console.error(error);
             this.statsLoaded = true;
@@ -195,8 +203,9 @@ export class GeneralStatsComponent implements OnInit {
           this.statsLoaded = true;
           this.existingStatsFound = true;
           this.messageBannerService.reportMessage(
-            new BannerMessage('Your stats were created', BannerMessageType.info)
-          )},
+            new BannerMessage('Your stats were created', BannerMessageType.info));
+          this.createStatsFormGroup();
+        },
           error => {
             console.error(error);
             this.noStatsFound = true;
@@ -208,4 +217,5 @@ export class GeneralStatsComponent implements OnInit {
           })
     }
   }
+}
 }
