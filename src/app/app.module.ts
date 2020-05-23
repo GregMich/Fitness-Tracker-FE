@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // for Http Request loading bars
 import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
 import { StatsModule } from './stats/stats.module';
+import { CaloriesModule } from "./calories/calories.module";
 import { AuthComponent } from "./Auth/auth.component";
 import { AuthGuard } from "./Auth/authGuard";
 import { AuthService } from './Auth/auth.service';
@@ -41,7 +42,8 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
     ReactiveFormsModule,
     StatsModule,
     MessageBannerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CaloriesModule
   ],
   providers: [
     RestfulDataSource, 
