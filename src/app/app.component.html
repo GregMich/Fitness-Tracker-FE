@@ -1,16 +1,32 @@
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<!-- <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0">
       <strong>Fitness Tracker</strong>
   </a>
   
   <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap dropdown">
-      <a class="nav-link" href="#">
-        User Profile Name
-      </a>
+    <li class="nav-item text-nowrap">
+      <h6 class="text-white mt-1">
+        {{ displayName }}
+      </h6>
     </li>
   </ul>
-</nav>
+</nav> -->
+<ul class="nav fixed-top flex-md-nowrap p-0 shadow bg-dark">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0">
+    <strong class="text-white">Fitness Tracker</strong>
+  </a>
+  <li class="nav-item ml-auto mt-1 dropdown">
+    <a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" 
+    href="#" aria-haspopup="true" aria-expanded="false">
+      {{ displayName }}
+    </a>
+    <div class="dropdown-menu">
+      <button class="dropdown-item btn btn-link" (click)="logoutUser()">
+        Logout
+      </button>
+    </div>
+  </li>
+</ul>
 
 <div class="container-fluid">
   <div class="row">
@@ -46,24 +62,32 @@
               <i class="fas fa-layer-group"></i>&nbsp; Stats
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="goals"
             [class.active]="activeNavbarRoute('/goals')"
             [class.disabled]="activeNavbarRoute('/auth')">
               <i class="fas fa-bullseye"></i>&nbsp; Goals
             </a>
-          </li>
-          <li class="nav-item">
+          </li> -->
+          <!-- <li class="nav-item">
             <a class="nav-link" routerLink="progress"
             [class.active]="activeNavbarRoute('/progress')"
             [class.disabled]="activeNavbarRoute('/auth')">
-              <i class="far fa-chart-bar"></i>&nbsp; Progress
+              <i class="far fa-chart-bar"></i>  Progress
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="calories"
+            [class.active]="activeNavbarRoute('/calories')"
+            [class.disabled]="activeNavbarRoute('/auth')">
+              <i class="fas fa-burn"></i>&nbsp; Calories
             </a>
           </li>
         </ul>
       </div>
     </nav>
     <div class="col-md-9 ml-sm-auto col-lg-10 px-4 pt-5">
+      <message-banner></message-banner>
       <router-outlet></router-outlet>
       <ngx-loading-bar></ngx-loading-bar>
     </div>

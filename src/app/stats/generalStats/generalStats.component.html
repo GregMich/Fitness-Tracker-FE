@@ -1,10 +1,7 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Stats</h1>
-</div>
 <div class="pt-2 spinner-border spinner-border text-primary" 
     *ngIf="!statsLoaded"></div>
 
-<div class="pt-2" *ngIf="existingStatsFound">
+<div class="pt-2" *ngIf="existingStatsFound && !serverError">
     <h3 class="text-muted">
         General
         <button class="float-right btn btn-link"
@@ -13,11 +10,6 @@
             <i class="fa fa-edit"></i>
         </button>
     </h3>
-    <!-- <button class="btn btn-link float-right pt-2"
-        data-toggle="modal"
-        data-target="#exampleModal">
-        <i class="fa fa-edit"></i>
-    </button> -->
     <table class="table table-hover">
         <thead>
             <tr>
@@ -52,7 +44,7 @@
         </small>
     </p>
 </div>
-<div *ngIf="noStatsFound">
+<div *ngIf="noStatsFound && !serverError">
     <h3 class="text-muted">
         Enter your general stats
         <button class="float-right btn btn-link"
@@ -62,10 +54,9 @@
         </button>
     </h3>
 </div>
-
 <div class="modal fade" id="changeStatsModal" tabindex="-1" 
 aria-labelledby="changeStatsModalLabel" aria-hidden="true"
-*ngIf="statsLoaded || noStatsFound">
+*ngIf="(statsLoaded || noStatsFound) && !serverError">
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
@@ -81,6 +72,10 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                 Weight:
                 <input class="form-control" 
                     type="text" formControlName="weight">
+                    <span *ngIf="weight.invalid && (weight.dirty || weight.touched)"
+                        class="text-danger">
+                        <p *ngIf="weight.errors.required">Weight is required</p>
+                    </span>
             </label>
           </div>
           <div class="form-group">
@@ -88,9 +83,14 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                 Unit:
                 <select class="form-control" formControlName="age"
                     formControlName="weightUnit">
-                    <option>Lb</option>
+                    <option selected>Lb</option>
                     <option>Kg</option>
                 </select>
+                <span *ngIf="weightUnit.invalid 
+                && (weightUnit.dirty || weightUnit.touched)"
+                class="text-danger">
+                <p *ngIf="weightUnit.errors.required">A weight unit is required</p>
+            </span>
             </label>
           </div>
           <div class="form-group">
@@ -114,9 +114,17 @@ aria-labelledby="changeStatsModalLabel" aria-hidden="true"
                     type="text" formControlName="age">
             </label>
           </div>
+          <div class="form-group">
+            <label>
+                Bodyfat Percentage:
+                <input class="form-control" 
+                    type="text" formControlName="bodyfatPercentage">
+            </label>
+          </div>
           <div class="modal-footer">
             <button class="btn btn-link"
-                type="submit" data-dismiss="modal" (click)="onGeneralStatsSubmit()">
+                type="submit" data-dismiss="modal" (click)="onGeneralStatsSubmit()"
+                [disabled]="!statsForm.valid">
                   Save
               </button>
           </div>

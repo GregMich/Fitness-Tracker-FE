@@ -2,14 +2,18 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { shareReplay, tap } from "rxjs/operators";
 import * as moment from "moment";
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
 
+    private tokenKey = 'id_token'
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string) {
-        return this.http.post<User>('/api/login', {email, password})
+        // TODO make this part of a configuration
+        console.info('SENDING THE LOGIN REQUEST');
+        return this.http.post<any>(`https://localhost:5001/api/auth`, {email, password})
         .pipe(
             tap( res => this.setSession(res)))
         .pipe(
@@ -17,19 +21,23 @@ export class AuthService {
     }
 
     private setSession(authResult) {
-        const expiresAt = moment().add(authResult.expiresIn,'second');
+        var decodedJWT = jwt_decode(authResult.token);
 
-        localStorage.setItem('id_token', authResult.idToken);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+        localStorage.setItem(this.tokenKey, authResult.token);
     }
 
     logout() {
         localStorage.removeItem("id_token");
-        localStorage.removeItem("expires_at");
     }
 
     public isLoggedIn() {
-        return moment().isBefore(this.getExpiration());
+        console.log('Checking to see if logged in');
+        if (localStorage.getItem(this.tokenKey) != null)
+        {
+            const now = Date.now().valueOf() / 1000;
+            return (now < this.getExpiration())
+        }
+        return false;
     }
 
     isLoggedOut() {
@@ -37,17 +45,27 @@ export class AuthService {
     }
 
     getExpiration() {
-        const expiration = localStorage.getItem("expires_at");
-        const expiresAt = JSON.parse(expiration);
-        return moment(expiresAt);
+        const token = localStorage.getItem(this.tokenKey);
+        const decodedToken = jwt_decode(token);
+        const exp = decodedToken.exp;
+        return exp;
     }
 
-    isAuthenticated() {
-        console.warn('AUTH SERVICE CALLED')
-        return false;
+    getUserEmail() {
+        const token = localStorage.getItem(this.tokenKey);
+        const decodedToken = jwt_decode(token);
+        return decodedToken.Email;
     }
-}
 
-export class User {
+    getToken() {
+        console.log('Retrieving Token');
+        var token = localStorage.getItem(this.tokenKey);
+        return token;
+    }
 
+    getUserId() {
+        const token = localStorage.getItem(this.tokenKey);
+        const decodedToken = jwt_decode(token);
+        return decodedToken.UserId;
+    }
 }

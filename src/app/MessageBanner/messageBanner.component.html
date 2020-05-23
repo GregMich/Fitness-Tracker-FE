@@ -1,0 +1,14 @@
+<div class="pt-3 pb-2 mb-3">
+    <div class="alert text-center 
+        alert-dismissible fade show" *ngIf="lastMessage"
+        [ngClass]="getMessageBannerClassMap()"
+        [@simpleFadeAnimation]="'in'">
+        <strong>
+            {{ lastMessage.text }}
+        </strong>
+        <button type="button" class="close" aria-label="Close"
+        (click)="clearMessage()">
+            <span>&times;</span>
+          </button>
+    </div>
+</div>

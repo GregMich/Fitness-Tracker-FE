@@ -8,6 +8,7 @@ import { ProgressComponent } from "./progress/progress.component";
 import { StatsComponent } from './stats/stats.component';
 import { AuthComponent } from './Auth/auth.component';
 import { AuthGuard } from './Auth/authGuard';
+import { CaloriesComponent } from './calories/calories.component';
 
 const routes: Routes = [
   {
@@ -21,23 +22,33 @@ const routes: Routes = [
   },
   {
     path: "cardio",
-    component: CardioComponent
+    component: CardioComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "stats",
-    component: StatsComponent
+    component: StatsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "goals",
-    component: GoalsComponent
+    component: GoalsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "progress",
-    component: ProgressComponent
+    component: ProgressComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "calories",
+    component: CaloriesComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "**",
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

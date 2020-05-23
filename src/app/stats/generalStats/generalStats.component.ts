@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralStatsModel } from './generalStats.model';
 import { RestfulDataSource } from "../../data/restful.datasource";
-import { FormGroup, FormControl } from "@angular/forms";
-import { catchError } from "rxjs/operators";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { AuthService } from "../../Auth/auth.service";
+import { MessageBannerService } from 'src/app/MessageBanner/messageBannerService';
+import { BannerMessage, BannerMessageType } from "../../MessageBanner/messageBanner.model";
 
 @Component({
   selector: 'general-stats',
@@ -20,10 +22,14 @@ export class GeneralStatsComponent implements OnInit {
   public noStatsFound: boolean = false;
   // a 200 returned with the existing stats data
   public existingStatsFound: boolean = false;
+  // cancel loading of component due to server communication error
+  public serverError: boolean = false;
 
   statsForm: FormGroup;
 
-  constructor(private dataSource: RestfulDataSource) {
+  constructor(private dataSource: RestfulDataSource,
+    private auth: AuthService,
+    private messageBannerService: MessageBannerService) {
   }
 
   ngOnInit() {
@@ -40,46 +46,63 @@ export class GeneralStatsComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 404) {
-            console.log('There was a 404 error');
             this.noStatsFound = true;
             this.statsLoaded = true;
             this.createStatsFormGroup();
+          } else if (error.status == 401) { 
+            console.warn('user unauthorized')
+          }
+          else {
+            console.error('There was an error communicating with the backend server');
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error', BannerMessageType.error)
+            )
+            this.statsLoaded = true;
+            this.serverError = true;
           }
         });
   }
 
-  // TODO consider cleaning this up
   private calculateBmi() {
+    var bodyWeight = this.stats.weight;
+    if (this.stats.weightUnit == 'Kg') {
+      bodyWeight = bodyWeight * 2.205
+    }
     this.bmi =
-      (((+this.stats.weight) / ((+this.stats.heightInch) + (+this.stats.heightFeet * 12)) ** 2)
+      (((+bodyWeight) / ((+this.stats.heightInch) + (+this.stats.heightFeet * 12)) ** 2)
         * 702);
     console.debug(`bmi calculated: ${this.bmi}`);
   }
 
-  // TODO move this mess into a method in the StatsModel class
   private createStatsFormGroup() {
-
-    if (this.stats != undefined) {
-      this.statsForm = new FormGroup({
-        "weight": new FormControl(this.stats.weight),
-        "weightUnit": new FormControl(this.stats.weightUnit),
-        "heightFeet": new FormControl(this.stats.heightFeet),
-        "heightInch": new FormControl(this.stats.heightInch),
-        "age": new FormControl(this.stats.age),
-        "bodyfatPercentage": new FormControl(this.stats.bodyfatPercentage)
-      });
-    }
-    else {
-      this.statsForm = new FormGroup({
-        "weight": new FormControl(),
-        "weightUnit": new FormControl(),
-        "heightFeet": new FormControl(),
-        "heightInch": new FormControl(),
-        "age": new FormControl(),
-        "bodyfatPercentage": new FormControl()
-      });
-    }
+    this.statsForm = new FormGroup({
+        "weight": new FormControl(this.stats?.weight,
+          [
+            Validators.required
+          ]),
+        "weightUnit": new FormControl(this.stats?.weightUnit,
+          [
+            Validators.required
+          ]),
+        "heightFeet": new FormControl(this.stats?.heightFeet,
+          [
+            Validators.required
+          ]),
+        "heightInch": new FormControl(this.stats?.heightInch,
+          [
+            Validators.required
+          ]),
+        "age": new FormControl(this.stats?.age),
+        "bodyfatPercentage": new FormControl(this.stats?.bodyfatPercentage)
+    });
   }
+
+  get weight() { return this.statsForm.get("weight") }
+  get weightUnit() { return this.statsForm.get('weightUnit') }
+  get heightFeet() { return this.statsForm.get('heightFeet') }
+  get heightInch() { return this.statsForm.get('heightInch') }
+  get age() { return this.statsForm.get('age') }
+  get bodyfatPercentage() { return this.statsForm.get('bodyfatPercentage') }
 
   get bmiDisplayString() {
     this.calculateBmi();
@@ -105,57 +128,94 @@ export class GeneralStatsComponent implements OnInit {
     }
   }
 
-  // TODO move logic for saving stats to a repo or some other kind of service
   onGeneralStatsSubmit() {
 
+    if (this.statsForm.valid) {
     console.debug("OnGeneralStatsClick event listener");
     console.debug(this.statsForm.value);
 
     if (this.statsLoaded && !this.noStatsFound) {
-      // need to perform a PUT to update the model
       console.debug("Updating stats model with PUT request");
+
       let updatedStatsModel = new GeneralStatsModel(
-          this.stats.id,
+          this.stats.statsId,
           this.stats.userId,
-          this.statsForm.value['weight'] as number,
+          +this.statsForm.value['weight'] as number,
           this.statsForm.value['weightUnit'],
-          this.statsForm.value['heightFeet'] as number,
-          this.statsForm.value['heightInch'] as number,
-          this.statsForm.value['age'] as number,
-          this.statsForm.value['bodyfatPercentage'] as number)
+          +this.statsForm.value['heightFeet'] as number,
+          +this.statsForm.value['heightInch'],
+          parseInt(this.statsForm.value['age']),
+          +this.statsForm.value['bodyfatPercentage'])
+
+        console.log('UPDATED STATS MODEL');
+        console.log(updatedStatsModel);
 
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
+
       this.dataSource
         .updateStatsData(updatedStatsModel)
         .subscribe(data => {
           console.debug("updateStatsData call back");
+          console.log(data);
           this.stats = data;
           this.statsLoaded = true;
-          this.existingStatsFound = true;})
+          this.existingStatsFound = true;
+          this.messageBannerService.reportMessage(
+            new BannerMessage('Your stats were updated', BannerMessageType.info));
+          this.createStatsFormGroup();
+        },
+          error => {
+            console.error(error);
+            this.statsLoaded = true;
+            this.existingStatsFound = true;
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error updating your stats, please try again',
+              BannerMessageType.error)
+            )
+          })
     }
     else if (this.noStatsFound) {
       console.log('Creating new General Stats model with POST request');
+
       let newStatsModel = new GeneralStatsModel(
-        null,
-        10,
-        this.statsForm.value['weight'] as number,
+        0,
+        parseInt(this.auth.getUserId()),
+        +this.statsForm.value['weight'],
         this.statsForm.value['weightUnit'],
-        this.statsForm.value['heightFeet'] as number,
-        this.statsForm.value['heightInch'] as number,
-        this.statsForm.value['age'] as number,
-        this.statsForm.value['bodyfatPercentage'] as number)
+        +this.statsForm.value['heightFeet'],
+        +this.statsForm.value['heightInch'],
+        +this.statsForm.value['age'],
+        +this.statsForm.value['bodyfatPercentage'])
+
+        console.log('new stats model')
+        console.log(newStatsModel);
 
       this.statsLoaded = false;
       this.existingStatsFound = false;
       this.noStatsFound = false;
+
       this.dataSource
         .createStatsData(newStatsModel)
         .subscribe(data => {
           this.stats = data;
           this.statsLoaded = true;
-          this.existingStatsFound = true;})
+          this.existingStatsFound = true;
+          this.messageBannerService.reportMessage(
+            new BannerMessage('Your stats were created', BannerMessageType.info));
+          this.createStatsFormGroup();
+        },
+          error => {
+            console.error(error);
+            this.noStatsFound = true;
+            this.statsLoaded = true;
+            this.messageBannerService.reportMessage(
+              new BannerMessage('There was an error saving your stats, please try again',
+              BannerMessageType.error)
+            )
+          })
     }
   }
+}
 }
