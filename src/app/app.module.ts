@@ -23,12 +23,15 @@ import { AuthGuard } from "./Auth/authGuard";
 import { AuthService } from './Auth/auth.service';
 import { AuthTokenInterceptor } from "./Auth/token.interceptor";
 import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
+import { AddResistanceTrainingSessionComponent } from './lifting/add-resistance-training-session/add-resistance-training-session.component';
+import { ViewResistanceTrainingSessionsComponent } from './lifting/view-resistance-training-sessions/view-resistance-training-sessions.component';
+import { LiftingModule } from './lifting/lifting.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LiftingComponent,
     CardioComponent,
     GoalsComponent,
     ProgressComponent,
@@ -43,7 +46,8 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
     StatsModule,
     MessageBannerModule,
     BrowserAnimationsModule,
-    CaloriesModule
+    CaloriesModule,
+    LiftingModule
   ],
   providers: [
     RestfulDataSource, 
