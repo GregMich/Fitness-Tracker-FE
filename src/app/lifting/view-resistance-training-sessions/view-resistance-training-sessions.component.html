@@ -1,303 +1,77 @@
-<div class="pt-2">
-    <h3 class="text-muted">
-        Your Training Sessions
-    </h3>
-</div>
+<div class="pt-2 spinner-border spinner-border text-primary" 
+    *ngIf="!trainingSessionsLoaded"></div>
 
-<div class="card w-auto">
-    <a class="card-header btn-block" href="#excercise-1" data-toggle="collapse">
-        <h5 class="card-title text-dark">
-            5/24/2020
-            <button class="btn btn-link float-right collapsed" 
-                type="button" data-toggle="collapse"
-                data-target=#excercise-1>
-                <i class="fas fa-caret-down"></i>
-            </button>
-        </h5>
-    </a>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                            Bench Press
-                </h6>
-                <div id="excercise-1" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                    Squat
-                </h6>
-                <div id="excercise-1" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>315</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>310</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>290</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>285</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                    Row
-                </h6>
-                <div id="excercise-1" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>155</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>145</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>145</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>135</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
-                </div>
-            </li>
-        </ul>
+<div *ngIf="trainingSessionsLoaded">
+    <div class="pt-2 pb-2">
+        <h3 class="text-muted">
+            Your Training Log
+        </h3>
     </div>
-</div>
-<br>
-<div class="card w-auto">
-    <div class="card-header">
-        <h5 class="card-title">
-            5/24/2020
-            <button class="btn btn-link float-right collapsed" 
-                type="button" data-toggle="collapse"
-                data-target=#excercise-2>
-                <i class="fas fa-caret-down"></i>
-            </button>
-        </h5>
-    </div>
-    <div class="card-body">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                            Bench Press
-                </h6>
-                <div id="excercise-2" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>225</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
+    
+    <div class="row mb-2" *ngFor="let trainingSession of resistanceTrainingSessions">
+        <div class="col-12">
+            <div class="card w-auto shadow">
+                <a class="card-header btn-block"
+                [attr.href]="'#trainingCollapse' + trainingSession.resistanceTrainingSessionId"
+                data-toggle="collapse">
+                    <h5 class="card-title text-dark">
+                        {{ trainingSession.trainingSessionDate | date }}
+                        <button class="btn btn-link collapsed"
+                            type="button" data-toggle="collapse"
+                            [attr.href]="'#trainingCollapse' + trainingSession.resistanceTrainingSessionId">
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                    </h5>
+                </a>
+                <div class="card-body" *ngIf="trainingSession.excercises.length > 0">
+                    <ul class="list-group list-group-flush">
+                        <li *ngFor="let excercise of trainingSession.excercises"
+                            class="list-group-item">
+                            <h6 class="card-title text-muted">
+                                {{ excercise.excerciseName }}
+                            </h6>
+                            <div class="collapse" 
+                            [id]="'trainingCollapse' + trainingSession.resistanceTrainingSessionId">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Set</th>
+                                            <th>Reps</th>
+                                            <th>Weight</th>
+                                            <th>RPE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let set of excercise.sets; let i = index;">
+                                            <td>{{ i + 1 }}</td>
+                                            <td>{{ set.reps }}</td>
+                                            <td>{{ set.weight }} {{ set.weightUnit}}</td>
+                                            <td>{{ set.rateOfPercievedExertion }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <strong>
+                                    Total Volume: {{ calculateTotal(excercise)}} pounds
+                                </strong>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </li>
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                    Squat
-                </h6>
-                <div id="excercise-2" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>315</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>310</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>290</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>285</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
+                <div class="card-footer">
+                    <div class="btn-group float-right">
+                        <button class="btn btn-link" data-toggle="tooltip" data-placement="top"
+                            title="Delete this training session from the log"
+                            (click)="onClickDeleteTrainingSession(trainingSession.resistanceTrainingSessionId)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn btn-link" data-togle="tooltip" data-placement="top"
+                            title="Edit this training session"
+                            (click)="onClickEditTrainingSession(trainingSession.resistanceTrainingSessionId)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                    </div>
                 </div>
-            </li>
-            <li class="list-group-item">
-                <h6 class="card-title text-muted">
-                    Row
-                </h6>
-                <div id="excercise-2" class="collapse">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Set</th>
-                                <th>Reps</th>
-                                <th>Weight</th>
-                                <th>RPE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>8</td>
-                                <td>155</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>8</td>
-                                <td>145</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>8</td>
-                                <td>145</td>
-                                <td>8</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>8</td>
-                                <td>135</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <strong>Total Volume: 1000 LBs</strong>
-                </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </div>
