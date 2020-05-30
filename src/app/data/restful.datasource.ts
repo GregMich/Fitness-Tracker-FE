@@ -61,4 +61,11 @@ export class RestfulDataSource {
              retry(1)
          );
     }
+
+    deleteResistanceTrainingSession(resistanceTrainingSessionId): Observable<void> {
+        const url = `${this.url}/User/${this.auth.getUserId()}/ResistanceTrainingSessions/${resistanceTrainingSessionId}`;
+        console.log('Sending DELETE request to')
+        console.log(url);
+        return this.http.delete<void>(url);
+    }
 }
