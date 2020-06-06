@@ -61,8 +61,12 @@
                     <div class="btn-group float-right">
                         <button class="btn btn-link" data-toggle="tooltip" data-placement="top"
                             title="Delete this training session from the log"
-                            (click)="onClickDeleteTrainingSession(trainingSession.resistanceTrainingSessionId)">
+                            (click)="onClickDeleteTrainingSession(trainingSession.resistanceTrainingSessionId)"
+                            *ngIf="!trainingSession.markedDelete">
                             <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="btn btn-link" *ngIf="trainingSession.markedDelete">
+                            <i class="fas fa-spinner fa-pulse"></i>
                         </button>
                         <button class="btn btn-link" data-togle="tooltip" data-placement="top"
                             title="Edit this training session"

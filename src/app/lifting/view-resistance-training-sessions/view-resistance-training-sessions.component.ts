@@ -29,7 +29,16 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
     this.trainingSessionsLoaded = false;
     this.dataSource.getResistanceTrainingSessionData()
     .subscribe(data => {
-      this.resistanceTrainingSessions = data;
+      this.resistanceTrainingSessions = [];
+      data.forEach(_ => {
+        this.resistanceTrainingSessions.push(
+          new ResistanceTrainingSessionModel(
+            _.resistanceTrainingSessionId, 
+            _.trainingSessionDate, 
+            _.userId, 
+            _.excercises,
+            false))
+      })
       this.trainingSessionsLoaded = true;
       console.log(`callback from getResistanceTrainingSessionsObservable: ${JSON.stringify(data, null, " ")}`);
       console.log(`current training sessions data: ${JSON.stringify(this.resistanceTrainingSessions, null, " ")}`)
@@ -48,11 +57,20 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
   onClickDeleteTrainingSession(trainingSessionId: number) {
     console.log(`onClickDeleteTrainingEventListener was called with id: ${trainingSessionId}`);
     console.log(`onClickEditTrainingEventListener was called with id: ${trainingSessionId}`);
+    this.resistanceTrainingSessions.find(_ => _.resistanceTrainingSessionId == trainingSessionId).markedDelete = true;
     this.dataSource.deleteResistanceTrainingSession(trainingSessionId)
       .subscribe(_ => {
-        this.loadResistanceTrainingSessions();
+        var index = this.resistanceTrainingSessions.findIndex(_ => _.resistanceTrainingSessionId == trainingSessionId);
+        this.resistanceTrainingSessions.splice(index, 1);
+        // this.loadResistanceTrainingSessions();
         this.messageBannerService.reportMessage(new
           BannerMessage('Training session was successfully deleted', BannerMessageType.info))
+      },error => {
+        console.error(error);
+        this.resistanceTrainingSessions.find(_ => _.resistanceTrainingSessionId == trainingSessionId).markedDelete = false;
+        this.messageBannerService.reportMessage(new BannerMessage(
+          'There was an error deleting this training session', BannerMessageType.error
+        ))
       })
   }
 
@@ -60,4 +78,12 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
 
   }
 
+  getTrainingSessionDeleteButtonClassMap(trainingSessionId: number) {
+    console.log(`DETERMINING CLASS MAP FOR: ${trainingSessionId}`)
+    var isMarked = this.resistanceTrainingSessions.find(_ => _.resistanceTrainingSessionId == trainingSessionId).markedDelete;
+    return {
+      'fas fa-trash': !isMarked,
+      'fas fa-spinner fa-spin': isMarked
+    }
+  }
 }

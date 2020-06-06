@@ -3,7 +3,8 @@ export class ResistanceTrainingSessionModel {
     constructor(public resistanceTrainingSessionId: number,
         public trainingSessionDate: Date,
         public userId: number,
-        public excercises: ExcerciseModel[]) { }
+        public excercises: ExcerciseModel[],
+        public markedDelete: boolean) { }
 }
 
 export class ExcerciseModel { 
