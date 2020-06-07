@@ -163,7 +163,7 @@ export class GeneralStatsComponent implements OnInit {
           this.statsLoaded = true;
           this.existingStatsFound = true;
           this.messageBannerService.reportMessage(
-            new BannerMessage('Your stats were updated', BannerMessageType.info));
+            new BannerMessage('Your stats were updated', BannerMessageType.success));
           this.createStatsFormGroup();
         },
           error => {
@@ -203,7 +203,7 @@ export class GeneralStatsComponent implements OnInit {
           this.statsLoaded = true;
           this.existingStatsFound = true;
           this.messageBannerService.reportMessage(
-            new BannerMessage('Your stats were created', BannerMessageType.info));
+            new BannerMessage('Your stats were created', BannerMessageType.success));
           this.createStatsFormGroup();
         },
           error => {

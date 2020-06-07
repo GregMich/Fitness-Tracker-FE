@@ -64,7 +64,7 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
         this.resistanceTrainingSessions.splice(index, 1);
         // this.loadResistanceTrainingSessions();
         this.messageBannerService.reportMessage(new
-          BannerMessage('Training session was successfully deleted', BannerMessageType.info))
+          BannerMessage('Training session was successfully deleted', BannerMessageType.success))
       },error => {
         console.error(error);
         this.resistanceTrainingSessions.find(_ => _.resistanceTrainingSessionId == trainingSessionId).markedDelete = false;

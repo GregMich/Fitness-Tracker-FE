@@ -9,5 +9,6 @@ export enum BannerMessageType
 {
     info,
     error,
-    warning
+    warning,
+    success
 }

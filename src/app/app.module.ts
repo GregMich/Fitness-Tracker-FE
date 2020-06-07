@@ -42,7 +42,11 @@ import { LiftingModule } from './lifting/lifting.module';
   imports: [
     BrowserModule,
     CommonModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      maxOpened: 3,
+      autoDismiss: true
+    }),
     AppRoutingModule,
     HttpClientModule,
     LoadingBarHttpClientModule,
