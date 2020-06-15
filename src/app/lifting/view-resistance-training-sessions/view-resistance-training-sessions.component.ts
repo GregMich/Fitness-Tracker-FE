@@ -45,6 +45,9 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
     },
     error => {
       console.log(error);
+      this.trainingSessionsLoaded = true;
+      this.messageBannerService.reportMessage(
+        new BannerMessage("There was an error loading your training sessions", BannerMessageType.error));
     })
   }
 
