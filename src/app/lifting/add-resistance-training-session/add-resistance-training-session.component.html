@@ -3,66 +3,77 @@
         Add a Training Session
         &nbsp;
         <button class="btn btn-outline-primary mb-1 ml-1"
-            data-toggle="modal" data-target="#addTrainingSessionModal">
+            [disabled]="showForm"
+            (click)="showForm =!showForm">
             <i class="fas fa-plus"></i>
         </button>
     </h3>
 </div>
 
-<div class="modal fade" id="addTrainingSessionModal" tabindex="-1"
-    aria-labelledby="changeStatsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addTrainingSessionModalLabel">
-                    Add Training Session
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form [formGroup]="trainingSessionForm">
-                    <!-- <input formControlName="date"> -->
-                    <label>
-                        Date
-                    </label>
-                    <input class="form-control" type="date" formControlName="date">
-                    <ng-container formArrayName="excercises">
-                        <div *ngFor="let _ of excercises.controls; index as i" class="pt-2">
-                            <ng-container>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <label>
-                                            Excercise Name
-                                        </label>
-                                        <input class="form-control" type="text" formControlName="excerciseName">
-                                        <button class="btn btn-link" (click)="removeExcercise(i)">
-                                            remove
-                                        </button>
+
+<div class="w-auto shadow card"
+    *ngIf="showForm">
+    <div class="card-header">
+        <h5 class="card-title text-dark">
+            New Training Session
+        </h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="trainingSessionForm">
+            <label class="">
+                Date
+            </label>
+            <input class="form-control mb-2" type="date" formControlName="date">
+            <ng-container formArrayName="excercises">
+                <div *ngFor="let ex of excercises.controls; index as ex_index" class="pt-2">
+                    <ng-container [formGroupName]="ex_index">
+                        <div class="form-row  align-items-center mb-2">
+                            <div class="col-11">
+                                <label>
+                                    Excercise Name
+                                </label>
+                                <input class="form-control" type="text" formControlName="excerciseName">
+                                <button class="btn btn-link"
+                                data-toggle="tooltip" data-placement="top"
+                                title="Remove Excercise"
+                                (click)="addSet(ex_index)">
+                                    + Add Set
+                                </button>
+                                <ng-container formArrayName="sets">
+                                    <div *ngFor="let set of getSets(ex_index).controls; index as set_index">
+                                        <ng-container [formGroupName]="set_index">
+                                            <label>
+                                                Test
+                                            </label>
+                                            <input type="text" class="form-control" formControlName="testName">
+                                        </ng-container>
                                     </div>
-                                    <div class="col">
-                                        <label>
-                                            Excercise Name
-                                        </label>
-                                        <input class="form-control" type="text" formControlName="excerciseName">
-                                    </div>
-                                    <div class="col">
-                                        <label>
-                                            Excercise Name
-                                        </label>
-                                        <input class="form-control" type="text" formControlName="excerciseName">
-                                    </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
+                            </div>
+                            <div class="col-1">
+                                <button class="btn btn-link mb-2" (click)="removeExcercise(ex_index)">
+                                    <i class="far fa-times-circle"></i>
+                                </button>
+                            </div>
                         </div>
                     </ng-container>
-                </form>
-                <button class="btn btn-link"
-                    (click)="addExcercise()">
-                    + Add Excercise
-                </button>
-            </div>
+                </div>
+            </ng-container>
+        </form>
+        <button class="btn btn-link"
+            (click)="addExcercise()">
+            + Add Excercise
+        </button>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group float-right">
+            <button class="btn btn-link mb-1 ml-1"
+            *ngIf="showForm"
+            (click)="cancelAddExcercise()"
+            data-toggle="tooltip" data-placement="top"
+            title="Cancel">
+            <i class="fas fa-trash"></i>
+        </button>
         </div>
     </div>
 </div>
