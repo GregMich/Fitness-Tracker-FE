@@ -60,7 +60,7 @@ export class AddResistanceTrainingSessionComponent implements OnInit {
   cancelAddExcercise() {
     this.initForm();
     this.messageBannerService.reportMessage(
-      new BannerMessage("Cancelled creating new resistance training session", BannerMessageType.info));
+      new BannerMessage("Add new training session cancelled", BannerMessageType.info));
   }
 
   private initForm() {

@@ -28,17 +28,28 @@
                 <div *ngFor="let ex of excercises.controls; index as ex_index" class="pt-2">
                     <ng-container [formGroupName]="ex_index">
                         <div class="form-row  align-items-center mb-2">
-                            <div class="col-11">
+                            <div class="col-6">
                                 <label>
                                     Excercise Name
                                 </label>
                                 <input class="form-control" type="text" formControlName="excerciseName">
-                                <button class="btn btn-link"
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-link mt-4"
                                 data-toggle="tooltip" data-placement="top"
                                 title="Remove Excercise"
                                 (click)="addSet(ex_index)">
-                                    + Add Set
+                                    <i class="fas fa-plus"></i> Add Set
                                 </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-link mt-4" (click)="removeExcercise(ex_index)">
+                                    <i class="fas fa-times"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-auto">
                                 <ng-container formArrayName="sets">
                                     <div *ngFor="let set of getSets(ex_index).controls; index as set_index">
                                         <ng-container [formGroupName]="set_index">
@@ -50,29 +61,24 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="col-1">
-                                <button class="btn btn-link mb-2" (click)="removeExcercise(ex_index)">
-                                    <i class="far fa-times-circle"></i>
-                                </button>
-                            </div>
                         </div>
                     </ng-container>
                 </div>
             </ng-container>
         </form>
-        <button class="btn btn-link"
-            (click)="addExcercise()">
-            + Add Excercise
-        </button>
     </div>
     <div class="card-footer">
         <div class="btn-group float-right">
+            <button class="btn btn-link"
+            (click)="addExcercise()">
+                <i class="fas fa-plus"></i> Add Excercise
+            </button>
             <button class="btn btn-link mb-1 ml-1"
             *ngIf="showForm"
             (click)="cancelAddExcercise()"
             data-toggle="tooltip" data-placement="top"
             title="Cancel">
-            <i class="fas fa-trash"></i>
+                <i class="fas fa-trash"></i>
         </button>
         </div>
     </div>
