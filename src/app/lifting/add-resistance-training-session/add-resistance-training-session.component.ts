@@ -3,6 +3,9 @@ import { FormGroup, FormArray, FormControl, Validators, PatternValidator } from 
 import { DatePipe } from "@angular/common";
 import { MessageBannerService } from "../../MessageBanner/messageBannerService";
 import { BannerMessage, BannerMessageType } from 'src/app/MessageBanner/messageBanner.model';
+import { ResistanceTrainingSessionModel, ExcerciseModel } from "../view-resistance-training-sessions/resistance-training-session.model"
+import { AuthService } from 'src/app/Auth/auth.service';
+import { RestfulDataSource } from 'src/app/data/restful.datasource';
 
 @Component({
   selector: 'add-resistance-training-session',
@@ -14,12 +17,16 @@ export class AddResistanceTrainingSessionComponent implements OnInit {
   trainingSessionForm: FormGroup;
   showForm: boolean = false;
   // TODO make this into some kind of generator function that automatically generates an
-  // array in a range of values
+  // array in a range of values (probably using a lambda expression in the array lib)
   selectableReps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   selectableRpe = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   formProcessesing = false;
+  private newTrainingSession;
 
-  constructor(private messageBannerService: MessageBannerService) { }
+  constructor(
+    private messageBannerService: MessageBannerService,
+    private auth: AuthService,
+    private dataSource: RestfulDataSource) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -112,6 +119,48 @@ export class AddResistanceTrainingSessionComponent implements OnInit {
   onFormSubmit() {
     console.log('form submitted')
     this.formProcessesing = true;
+
+    if (this.trainingSessionForm.valid) {
+      console.log('training session form was valid');
+
+      var newTrainingSessionModel = new ResistanceTrainingSessionModel(
+        0,
+        this.trainingSessionForm.value['date'],
+        parseInt(this.auth.getUserId()),
+        this.trainingSessionForm.value['excercises'],
+        false
+      );
+
+      // cast types to correct values
+      // TODO there MUST be a better way to take the form inputs and create
+      // a model object out of them by using some kind of array lambda expression..
+      newTrainingSessionModel.excercises.forEach(_ => {
+        _.sets.forEach(s => {
+          s.reps = +(s.reps),
+          s.weight = +(s.weight),
+          s.rateOfPercievedExertion = +(s.rateOfPercievedExertion)
+          s.weightUnit = s.weightUnit == "Lb" ? "Pounds" : "Kilograms"
+        });
+      });
+
+      console.log(newTrainingSessionModel);
+      this.dataSource
+       .createNewResistanceTrainingSession(newTrainingSessionModel)
+       .subscribe(data => {
+         console.log('Create new stats call back');
+         console.log(data);
+         this.messageBannerService.reportMessage(
+           new BannerMessage("Successfully created new training session", BannerMessageType.success))
+         this.formProcessesing = false;
+         this.initForm();
+       }, error => {
+         console.error(error);
+         this.messageBannerService.reportMessage(
+          new BannerMessage("There was an error creating the training session", BannerMessageType.error))
+         this.formProcessesing = false;
+       })
+
+    }
   }
 
 }

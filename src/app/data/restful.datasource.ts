@@ -68,4 +68,13 @@ export class RestfulDataSource {
         console.log(url);
         return this.http.delete<void>(url);
     }
+
+    createNewResistanceTrainingSession(
+        resistanceTrainingSession: ResistanceTrainingSessionModel)
+            : Observable<ResistanceTrainingSessionModel> {
+                const url = `${this.url}/User/${this.auth.getUserId()}/ResistanceTrainingSessions/`;
+                console.log('Sending POST request to');
+                console.log(url);
+                return this.http.post<ResistanceTrainingSessionModel>(url, resistanceTrainingSession);
+    }
 }
