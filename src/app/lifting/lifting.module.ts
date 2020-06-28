@@ -4,6 +4,7 @@ import { AddResistanceTrainingSessionComponent } from './add-resistance-training
 import { ViewResistanceTrainingSessionsComponent } from './view-resistance-training-sessions/view-resistance-training-sessions.component';
 import { LiftingComponent } from './lifting.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewResistanceTrainingSessionService } from './add-resistance-training-session/new-resistance-training-session-service';
 
 @NgModule({
     imports: [
@@ -15,6 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         AddResistanceTrainingSessionComponent,
         ViewResistanceTrainingSessionsComponent,
         LiftingComponent
+    ],
+    providers: [
+        NewResistanceTrainingSessionService
     ]
 })
 export class LiftingModule { }

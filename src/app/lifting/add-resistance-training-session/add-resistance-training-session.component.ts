@@ -6,6 +6,7 @@ import { BannerMessage, BannerMessageType } from 'src/app/MessageBanner/messageB
 import { ResistanceTrainingSessionModel, ExcerciseModel } from "../view-resistance-training-sessions/resistance-training-session.model"
 import { AuthService } from 'src/app/Auth/auth.service';
 import { RestfulDataSource } from 'src/app/data/restful.datasource';
+import { NewResistanceTrainingSessionService } from './new-resistance-training-session-service';
 
 @Component({
   selector: 'add-resistance-training-session',
@@ -26,7 +27,8 @@ export class AddResistanceTrainingSessionComponent implements OnInit {
   constructor(
     private messageBannerService: MessageBannerService,
     private auth: AuthService,
-    private dataSource: RestfulDataSource) { }
+    private dataSource: RestfulDataSource,
+    private newTrainingSessionService: NewResistanceTrainingSessionService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -147,8 +149,10 @@ export class AddResistanceTrainingSessionComponent implements OnInit {
       this.dataSource
        .createNewResistanceTrainingSession(newTrainingSessionModel)
        .subscribe(data => {
-         console.log('Create new stats call back');
+         console.log('Create new resistance training session call back');
          console.log(data);
+         console.log('reporting new training session to observable service')
+         this.newTrainingSessionService.reportNewResistanceTrainingSession(data);
          this.messageBannerService.reportMessage(
            new BannerMessage("Successfully created new training session", BannerMessageType.success))
          this.formProcessesing = false;

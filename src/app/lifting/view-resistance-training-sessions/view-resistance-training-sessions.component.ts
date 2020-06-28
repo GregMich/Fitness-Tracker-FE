@@ -4,6 +4,7 @@ import { RestfulDataSource } from "../../data/restful.datasource";
 import { DatePipe } from "@angular/common";
 import { MessageBannerService } from 'src/app/MessageBanner/messageBannerService';
 import { BannerMessage, BannerMessageType } from 'src/app/MessageBanner/messageBanner.model';
+import { NewResistanceTrainingSessionService } from '../add-resistance-training-session/new-resistance-training-session-service';
 
 @Component({
   selector: 'view-resistance-training-sessions',
@@ -19,7 +20,16 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
   public serverError: boolean = false;
 
   constructor(private dataSource: RestfulDataSource,
-    private messageBannerService: MessageBannerService) { }
+    private messageBannerService: MessageBannerService,
+    addedResistanceTrainingSessionsService: NewResistanceTrainingSessionService) { 
+      addedResistanceTrainingSessionsService
+      .newTrainingSessions
+      .subscribe(t => {
+        console.log('NEW RESISTANCE TRAINING SESSION OBSERVED');
+        console.log(t);
+        this.resistanceTrainingSessions.push(t);
+      })
+    }
 
   ngOnInit(): void {
     this.loadResistanceTrainingSessions();
