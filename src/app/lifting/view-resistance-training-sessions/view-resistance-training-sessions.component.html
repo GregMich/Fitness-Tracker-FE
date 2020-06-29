@@ -2,10 +2,28 @@
     *ngIf="!trainingSessionsLoaded"></div>
 
 <div *ngIf="trainingSessionsLoaded">
-    <div class="pt-2 pb-2">
-        <h3 class="text-muted">
-            Your Training Log
-        </h3>
+    <div class="row pt-2 pb-2">
+        <div class="col-auto float-left">
+            <h3 class="text-muted">
+                Your Training Log
+            </h3>
+        </div>
+        <div class="col-auto pb-1 pl-5">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label class="pr-2">
+                        Sort By:
+                    </label>
+                    <select class="form-control">
+                        <option *ngFor="let option of this.sortingOptions | keyvalue"
+                        [selected]="option.value == this.sortOption"
+                        (click)=onChangeSortOption(option.key)>
+                            {{ option.value }}
+                        </option>
+                    </select>
+                </div>
+            </form>
+        </div>
     </div>
     
     <div class="row mb-2" *ngFor="let trainingSession of resistanceTrainingSessions">
