@@ -21,11 +21,11 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
   public serverError: boolean = false;
 
   sortingOptions = {
-    "DateEarliest": "Date (Earliest)",
-    "DateLatest": "Date (Latest)"
+    "Date (Earliest)": "Date (Earliest)",
+    "Date (Latest)": "Date (Latest)"
   }
 
-  public sortOption = this.sortingOptions.DateLatest;
+  public sortOption = this.sortingOptions["Date (Latest)"];
 
   constructor(private dataSource: RestfulDataSource,
     private messageBannerService: MessageBannerService,
@@ -116,13 +116,13 @@ export class ViewResistanceTrainingSessionsComponent implements OnInit {
   sortTrainingSessions() {
     switch (this.sortOption) {
 
-      case this.sortingOptions.DateEarliest:
+      case this.sortingOptions["Date (Earliest)"]:
         this.resistanceTrainingSessions.sort( (a: ResistanceTrainingSessionModel, b: ResistanceTrainingSessionModel)=> { 
           return new Date(a.trainingSessionDate).getTime() - new Date(b.trainingSessionDate).getTime();
         });
         break;
 
-      case this.sortingOptions.DateLatest:
+      case this.sortingOptions["Date (Latest)"]:
         this.resistanceTrainingSessions.sort( (a: ResistanceTrainingSessionModel, b: ResistanceTrainingSessionModel)=> { 
           return new Date(b.trainingSessionDate).getTime() - new Date(a.trainingSessionDate).getTime();
         });
