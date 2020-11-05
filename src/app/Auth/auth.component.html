@@ -1,46 +1,48 @@
-<div class="pt-5 mt-5 col-12">
-    <div class="alert alert-danger text-center"
-        *ngIf="authenticationFailed">
-        Username or password was incorrect
-    </div>
-    <h2 class="text-center">
-        Login
-    </h2>
-    <br>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
-        <div class="form-group text-center">
-            <label>
-                Username
-                <input class="form-control"
-                    formControlName="username">
-            </label>
+<div class="row justify-content-md-center">
+    <div class="pt-5 mt-5 col-4 shadow pb-5 mb-5 rounded">
+        <div class="alert alert-danger text-center"
+            *ngIf="authenticationFailed">
+            Username or password was incorrect
         </div>
-        <div class="form-group text-center">
-            <label>
-                Password
-                <input class="form-control" type=password
-                    formControlName="password">
-            </label>
-        </div>
-        <div class="text-center">
-            <button class="btn btn-outline-primary text-center" 
-            type="submit">
-                Login
-            </button>
-        </div>
+        <h2 class="text-center">
+            Login
+        </h2>
         <br>
-        <div class="text-center">
-            <a href="#">
-                Register
-            </a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="#">
-                Forgot Password?
-            </a>
-        </div>
-    </form>
-    <!-- <button class="btn btn-warning"
-        (click)="testIsLoggedIn()">
-        check is logged in
-    </button> -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+            <div class="form-group text-center">
+                <label>
+                    Username
+                    <input class="form-control"
+                        formControlName="username">
+                </label>
+            </div>
+            <div class="form-group text-center">
+                <label>
+                    Password
+                    <input class="form-control" type=password
+                        formControlName="password">
+                </label>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-primary text-center" 
+                type="submit">
+                    Login
+                </button>
+            </div>
+            <br>
+            <div class="text-center">
+                <a href="#">
+                    Register
+                </a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="#">
+                    Forgot Password?
+                </a>
+            </div>
+        </form>
+        <!-- <button class="btn btn-warning"
+            (click)="testIsLoggedIn()">
+            check is logged in
+        </button> -->
+    </div>
 </div>

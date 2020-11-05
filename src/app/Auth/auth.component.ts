@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
           this.messageBanner.reportMessage(
-            new BannerMessage('Welcome Back', BannerMessageType.info)
+            new BannerMessage('Login successful', BannerMessageType.info)
           )
           this.router.navigateByUrl("/");
         },

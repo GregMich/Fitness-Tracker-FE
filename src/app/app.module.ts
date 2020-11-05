@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { ToastrModule } from "ngx-toastr";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,12 +25,15 @@ import { AuthGuard } from "./Auth/authGuard";
 import { AuthService } from './Auth/auth.service';
 import { AuthTokenInterceptor } from "./Auth/token.interceptor";
 import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
+import { AddResistanceTrainingSessionComponent } from './lifting/add-resistance-training-session/add-resistance-training-session.component';
+import { ViewResistanceTrainingSessionsComponent } from './lifting/view-resistance-training-sessions/view-resistance-training-sessions.component';
+import { LiftingModule } from './lifting/lifting.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    LiftingComponent,
     CardioComponent,
     GoalsComponent,
     ProgressComponent,
@@ -36,6 +41,12 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      maxOpened: 3,
+      autoDismiss: true
+    }),
     AppRoutingModule,
     HttpClientModule,
     LoadingBarHttpClientModule,
@@ -43,7 +54,8 @@ import { UnauthorizedErrorInterceptor } from "./Auth/unauthorizedInterceptor";
     StatsModule,
     MessageBannerModule,
     BrowserAnimationsModule,
-    CaloriesModule
+    CaloriesModule,
+    LiftingModule
   ],
   providers: [
     RestfulDataSource, 

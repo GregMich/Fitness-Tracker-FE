@@ -1,4 +1,3 @@
-import { FormGroup, FormControl } from "@angular/forms";
 
 export class GeneralStatsModel {
 

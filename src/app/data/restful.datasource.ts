@@ -4,6 +4,7 @@ import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { GeneralStatsModel } from "../stats/generalStats/generalStats.model";
+import { ResistanceTrainingSessionModel } from "../lifting/view-resistance-training-sessions/resistance-training-session.model"
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../Auth/auth.service"; 
 import { retry } from "rxjs/operators"
@@ -49,5 +50,31 @@ export class RestfulDataSource {
         return this.http.post<GeneralStatsModel>(
             url, 
             statsModel);
+    }
+
+    getResistanceTrainingSessionData(): Observable<ResistanceTrainingSessionModel[]> {
+        const url = `${this.url}/User/${this.auth.getUserId()}/ResistanceTrainingSessions/`;
+        console.log('Sending GET request to')
+        console.log(url);
+        return this.http.get<ResistanceTrainingSessionModel[]>(url)
+         .pipe(
+             retry(1)
+         );
+    }
+
+    deleteResistanceTrainingSession(resistanceTrainingSessionId): Observable<void> {
+        const url = `${this.url}/User/${this.auth.getUserId()}/ResistanceTrainingSessions/${resistanceTrainingSessionId}`;
+        console.log('Sending DELETE request to')
+        console.log(url);
+        return this.http.delete<void>(url);
+    }
+
+    createNewResistanceTrainingSession(
+        resistanceTrainingSession: ResistanceTrainingSessionModel)
+            : Observable<ResistanceTrainingSessionModel> {
+                const url = `${this.url}/User/${this.auth.getUserId()}/ResistanceTrainingSessions/`;
+                console.log('Sending POST request to');
+                console.log(url);
+                return this.http.post<ResistanceTrainingSessionModel>(url, resistanceTrainingSession);
     }
 }
